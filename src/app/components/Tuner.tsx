@@ -37,7 +37,7 @@ function TunerNeedle({ status, cents }: { status: TuneStatus; cents: number }) {
   const rotation = (clampedCents / 50) * 45;
 
   const statusColor =
-    status === "in-tune" ? "#4ade80" :
+    status === "in-tune" ? "#48dd48" :
     status === "sharp" ? "#f472b6" :
     status === "flat" ? "#60a5fa" : "#7a7a8c";
 

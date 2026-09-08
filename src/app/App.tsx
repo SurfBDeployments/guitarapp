@@ -3,22 +3,59 @@ import { WireframeInstrument } from "./components/WireframeInstrument";
 import { WireframeTuner } from "./components/WireframeTuner";
 import { WireframeSongs } from "./components/WireframeSongs";
 import { WireframeTools } from "./components/WireframeTools";
-import { Menu } from "lucide-react";
+import { Guitar, SlidersVertical, Music4, SlidersHorizontal, LucideIcon, ArrowLeft, Menu } from "lucide-react";
 
-type Screen = "instrument" | "tuner" | "songs" | "tools";
+type Screen = "instrument" | "tune" | "music" | "tools";
 
-const NAV: { id: Screen; label: string; icon: string }[] = [
-  { id: "instrument", label: "Instrument", icon: "🎸" },
-  { id: "tuner", label: "Tuner", icon: "🎵" },
-  { id: "songs", label: "Songs", icon: "📖" },
-  { id: "tools", label: "Tools", icon: "🔧" },
+const NAV: { id: Screen; label: string; icon: LucideIcon }[] = [
+  { id: "instrument", label: "Instrument", icon: Guitar },
+  { id: "tune", label: "Tune", icon: SlidersVertical },
+  { id: "music", label: "Music", icon: Music4 },
+  { id: "tools", label: "Tools", icon: SlidersHorizontal },
 ];
+
+export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; onSelect: (id: Screen) => void }) {
+  return (
+    <div
+      className="absolute bottom-0 left-0 right-0 border-t border-border flex items-stretch"
+      style={{ height: 64, background: "#ffffff" }}
+    >
+      {NAV.map((n) => {
+        const Icon = n.icon;
+        const active = activeScreen === n.id;
+        return (
+          <button
+            key={n.id}
+            onClick={() => onSelect(n.id)}
+            className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
+              active ? "bg-foreground/5 text-amber-600" : "text-muted-foreground hover:bg-muted/50"
+            }`}
+          >
+            <Icon size={18} />
+            <span
+              className={`text-[10px] font-mono ${active ? "text-foreground font-bold" : "text-muted-foreground"}`}
+            >
+              {n.label}
+            </span>
+            {active && (
+              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-foreground" />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>("instrument");
 
   function handleNavigateToTuner() {
-    setScreen("tuner");
+    setScreen("tune");
+  }
+
+  function handleGoBack() {
+    window.history.back();
   }
 
   return (
@@ -52,11 +89,11 @@ export default function App() {
             </div>
           </div>
 
-          {/* App header */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-border" style={{ background: "hex(#ffffff)" }}>
+          {/* App header - Fixed hex syntax */}
+          <div className="flex items-center justify-between px-5 py-3 border-b border-border" style={{ background: "#ffffff" }}>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded border border-border bg-muted flex items-center justify-center text-sm">🎸</div>
-              <span className="font-mono font-bold text-sm text-foreground tracking-tight">JamMaster Tuning</span>
+            
+              <span className="font-mono font-bold text-md text-foreground tracking-wide">JamMaster Tuning</span>
             </div>
             <button
               type="button"
@@ -74,38 +111,13 @@ export default function App() {
             style={{ height: "calc(844px - 20px - 44px - 52px - 64px)", background: "transparent" }}
           >
             {screen === "instrument" && <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />}
-            {screen === "tuner" && <WireframeTuner />}
-            {screen === "songs" && <WireframeSongs />}
+            {screen === "tune" && <WireframeTuner />}
+            {screen === "music" && <WireframeSongs />}
             {screen === "tools" && <WireframeTools />}
           </div>
 
-          {/* Bottom nav */}
-          <div
-            className="absolute bottom-0 left-0 right-0 border-t border-border flex items-stretch"
-            style={{ height: 64, background: "#ffffff" }}
-          >
-            {NAV.map(n => {
-              const active = screen === n.id;
-              return (
-                <button
-                  key={n.id}
-                  onClick={() => setScreen(n.id)}
-                  className={`flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors ${active ? "bg-foreground/5" : "hover:bg-muted/50"
-                    }`}
-                >
-                  <span className="text-lg leading-none">{n.icon}</span>
-                  <span
-                    className={`text-[10px] font-mono ${active ? "text-foreground font-bold" : "text-muted-foreground"}`}
-                  >
-                    {n.label}
-                  </span>
-                  {active && (
-                    <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-foreground" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
+          {/* Replaced broken duplicate menu with BottomNav component */}
+          <BottomNav activeScreen={screen} onSelect={setScreen} />
         </div>
 
         {/* Screen label below phone */}

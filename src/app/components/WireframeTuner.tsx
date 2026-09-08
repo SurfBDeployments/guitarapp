@@ -254,9 +254,10 @@ export function WireframeTuner() {
           <Mic size={12} className="text-muted-foreground" />
         </div>
         <div>
-          <p className="text-xs font-medium text-foreground">Auto-Detect Mode</p>
-          <p className="text-[10px] text-muted-foreground mt-0.5 font-mono leading-relaxed">
-            Mic identifies the string you pluck from its pitch frequency — no tapping required.
+          <p className="text-xs font-medium text-foreground">Auto Mode</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5 font-mono leading-relaxed">
+      
+            The microphone automatically recognize which string the user is plucking and show them visually if it is sharp or flat.
           </p>
         </div>
       </Box>

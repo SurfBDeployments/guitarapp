@@ -1,24 +1,30 @@
 import { useState } from "react";
 
-type InstrumentFamily = "guitar" | "bass";
+type InstrumentFamily = "guitar" | "bass" | "ukulele";
 
 const GUITAR_PRESETS = [
-  { id: "g6",  label: "6-String Guitar", strings: 6,  tuning: ["E","A","D","G","B","e"] },
-  { id: "g7",  label: "7-String Guitar", strings: 7,  tuning: ["B","E","A","D","G","B","e"] },
-  { id: "g12", label: "12-String Guitar", strings: 12, tuning: ["E","e","A","a","D","d","G","g","B","B","e","e"] },
+  { id: "g6", label: "6-String Guitar", strings: 6, tuning: ["E", "A", "D", "G", "B", "e"] },
+  { id: "g7", label: "7-String Guitar", strings: 7, tuning: ["B", "E", "A", "D", "G", "B", "e"] },
+  { id: "g12", label: "12-String Guitar", strings: 12, tuning: ["E", "e", "A", "a", "D", "d", "G", "g", "B", "B", "e", "e"] },
 ];
+
 const BASS_PRESETS = [
-  { id: "b4", label: "4-String Bass", strings: 4, tuning: ["E","A","D","G"] },
-  { id: "b5", label: "5-String Bass", strings: 5, tuning: ["B","E","A","D","G"] },
-  { id: "b6", label: "6-String Bass", strings: 6, tuning: ["B","E","A","D","G","C"] },
+  { id: "b4", label: "4-String Bass", strings: 4, tuning: ["E", "A", "D", "G"] },
+  { id: "b5", label: "5-String Bass", strings: 5, tuning: ["B", "E", "A", "D", "G"] },
+  { id: "b6", label: "6-String Bass", strings: 6, tuning: ["B", "E", "A", "D", "G", "C"] },
+];
+
+const UKULELE_PRESETS = [
+  { id: "u4", label: "4-String Ukulele", strings: 4, tuning: ["G", "C", "E", "A"] },
 ];
 
 const FRET_MARKERS = [3, 5, 7, 9, 12];
-const FRET_COUNT   = 7; // trimmed for mobile
+const FRET_COUNT = 7; // trimmed for mobile
 
 function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
+
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">{children}</p>;
 }
@@ -104,26 +110,42 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
   const [family, setFamily] = useState<InstrumentFamily>("guitar");
   const [selectedId, setSelectedId] = useState("g6");
 
-  const presets = family === "guitar" ? GUITAR_PRESETS : BASS_PRESETS;
-  const all     = [...GUITAR_PRESETS, ...BASS_PRESETS];
-  const active  = all.find(p => p.id === selectedId) || GUITAR_PRESETS[0];
+  // Lookup map for presets by family
+  const PRESET_MAP = {
+    guitar: GUITAR_PRESETS,
+    bass: BASS_PRESETS,
+    ukulele: UKULELE_PRESETS,
+  };
+
+  const DEFAULT_ID_MAP = {
+    guitar: "g6",
+    bass: "b4",
+    ukulele: "u4",
+  };
+
+  const presets = PRESET_MAP[family];
+  const all = [...GUITAR_PRESETS, ...BASS_PRESETS, ...UKULELE_PRESETS];
+  const active = all.find((p) => p.id === selectedId) || presets[0];
+
+  const handleFamilyChange = (f: InstrumentFamily) => {
+    setFamily(f);
+    setSelectedId(DEFAULT_ID_MAP[f]);
+  };
 
   return (
     <div className="px-4 py-4 flex flex-col gap-4">
-
       {/* Header */}
       <div>
-     
         <h2 className="text-base font-bold text-foreground mt-0.5">Pick Your Instrument</h2>
-        <p className="text-xs text-muted-foreground mt-0.5">Choose type and string config to begin.</p>
+        <p className="text-xs text-muted-foreground mt-0.5">Choose type and string configuration to begin.</p>
       </div>
 
       {/* Family toggle */}
       <div className="flex gap-1 p-1 bg-card border border-border rounded w-full">
-        {(["guitar", "bass"] as InstrumentFamily[]).map(f => (
+        {(["guitar", "bass", "ukulele"] as InstrumentFamily[]).map((f) => (
           <button
             key={f}
-            onClick={() => { setFamily(f); setSelectedId(f === "guitar" ? "g6" : "b4"); }}
+            onClick={() => handleFamilyChange(f)}
             className={`flex-1 py-2 rounded text-sm font-mono capitalize transition-colors ${
               family === f ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
@@ -137,7 +159,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
       <div>
         <SectionLabel>Presets</SectionLabel>
         <div className="flex flex-col gap-2">
-          {presets.map(p => (
+          {presets.map((p) => (
             <button
               key={p.id}
               onClick={() => setSelectedId(p.id)}
@@ -183,7 +205,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
         </div>
         <MobileFretboard tuning={active.tuning} family={family} />
         <p className="text-[9px] font-mono text-muted-foreground mt-2">
-          [Toggles between bass & guitar · notes update per tuning]
+          [Toggles between bass, guitar & ukulele · notes update per tuning]
         </p>
       </Box>
 
