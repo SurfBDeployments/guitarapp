@@ -17,7 +17,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-sans font-semibold text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+  return <p className="text-sm font-sans font-normal text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
 }
 
 function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
