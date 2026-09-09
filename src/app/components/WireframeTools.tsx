@@ -77,7 +77,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
           <div className="w-4" />
           {Array.from({ length: FRET_COUNT }, (_,i) => (
             <div key={i} className="flex-1 text-center">
-              <span className="text-[8px] font-sans text-muted-foreground">{i+1}</span>
+              <span className="text-xs font-sans text-muted-foreground">{i+1}</span>
             </div>
           ))}
         </div>
@@ -87,7 +87,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
           return (
             <div key={si} className="flex items-center mb-0.5">
               <div className="w-7 shrink-0 flex justify-end pr-1">
-                <span className={`text-[9px] font-sans px-1 py-0.5 rounded border ${
+                <span className={`text-xs font-sans px-1 py-0.5 rounded border ${
                   openHL ? "bg-foreground text-primary-foreground border-foreground" : "bg-muted border-border text-muted-foreground"
                 }`}>{openLetter}</span>
               </div>
@@ -102,7 +102,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
                     <div className="absolute left-0 right-0 bg-foreground/20" style={{ height:1 }} />
                     {hl ? (
                       <div className="relative z-10 w-4 h-4 rounded-full bg-foreground flex items-center justify-center">
-                        <span className="text-[7px] font-sans font-bold text-primary-foreground">{note}</span>
+                        <span className="text-xs font-sans font-bold text-primary-foreground">{note}</span>
                       </div>
                     ) : dot ? (
                       <div className="relative z-10 w-2.5 h-2.5 rounded-full border border-border bg-card" />
@@ -113,7 +113,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
             </div>
           );
         })}
-        <p className="text-[8px] font-sans text-muted-foreground mt-1 ml-7">
+        <p className="text-xs font-sans text-muted-foreground mt-1 ml-7">
           ● = {label} · frets 1–{FRET_COUNT}
         </p>
       </div>
@@ -133,14 +133,14 @@ function ChordFinder() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-2 flex-wrap">
-        <div className="flex flex-col gap-0.5">
+        <div className="font-semibold flex flex-col gap-0.5">
           <SectionLabel>Root</SectionLabel>
           <NoteSelect value={root} onChange={setRoot} />
         </div>
-        <div className="flex flex-col gap-0.5 flex-1">
+        <div className="font-semibold flex flex-col gap-0.5 flex-1">
           <SectionLabel>Chord Type</SectionLabel>
           <select value={type} onChange={e=>setType(e.target.value)}
-            className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none w-full">
+            className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-semibold font-sans text-foreground focus:outline-none w-full">
             {Object.keys(CHORD_TYPES).map(k=><option key={k}>{k}</option>)}
           </select>
         </div>
@@ -157,7 +157,7 @@ function ChordFinder() {
       <div className="flex gap-2">
         {notes.map((n,i) => (
           <div key={i} className="flex flex-col items-center gap-0.5">
-            <span className="text-[9px] font-sans text-muted-foreground">{labels[i]}</span>
+            <span className="text-xs font-sans text-muted-foreground">{labels[i]}</span>
             <div className={`w-9 h-9 rounded-full border-2 flex items-center justify-center text-sm font-sans font-bold ${
               i===0 ? "bg-foreground border-foreground text-primary-foreground" : "bg-muted border-border text-foreground"
             }`}>{n}</div>
@@ -166,7 +166,7 @@ function ChordFinder() {
       </div>
 
       {/* Fretboard */}
-      <Box className="p-3">
+      <Box className="p-3 font-semibold">
         <SectionLabel>Fretboard — {root} {type}</SectionLabel>
         <MobileFretboard highlight={notes} label={`${root} ${type}`} />
       </Box>
@@ -185,11 +185,11 @@ function ScaleFinder() {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex gap-2 flex-wrap">
-        <div className="flex flex-col gap-0.5">
+        <div className="font-semibold flex flex-col gap-0.5">
           <SectionLabel>Root</SectionLabel>
           <NoteSelect value={root} onChange={setRoot} />
         </div>
-        <div className="flex flex-col gap-0.5 flex-1">
+        <div className="font-semibold flex flex-col gap-0.5 flex-1">
           <SectionLabel>Scale Type</SectionLabel>
           <select value={scale} onChange={e=>setScale(e.target.value)}
             className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none w-full">
@@ -210,7 +210,7 @@ function ScaleFinder() {
       </div>
 
       {/* Fretboard */}
-      <Box className="p-3">
+      <Box className="p-3 font-semibold">
         <SectionLabel>Fretboard — {root} {scale}</SectionLabel>
         <MobileFretboard highlight={notes} label={`${root} ${scale}`} />
       </Box>
@@ -230,7 +230,7 @@ export function WireframeTools() {
       <div>
     
         <h2 className="text-base font-bold text-foreground mt-0.5">Tools</h2>
-        <p className="text-sm text-primary">Chord Finder · Scale Finder</p>
+        <p className="text-sm font-semibold text-primary">Chord Finder · Scale Finder</p>
       </div>
 
       {/* Tabs */}

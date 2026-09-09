@@ -80,7 +80,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-2">{children}</p>;
+  return <p className="text-sm font-sans font-semibold text-muted-foreground uppercase tracking-widest mb-2">{children}</p>;
 }
 
 interface FretboardProps { tuning: string[]; family: InstrumentFamily }
@@ -96,7 +96,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
           <div className="w-4 shrink-0" />
           {Array.from({ length: FRET_COUNT }, (_, i) => (
             <div key={i} className="flex-1 text-center">
-              <span className="text-[9px] font-sans text-muted-foreground">{i + 1}</span>
+              <span className="text-xs font-sans text-muted-foreground">{i + 1}</span>
             </div>
           ))}
         </div>
@@ -123,7 +123,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
                   />
                   {hasDot && (
                     <div className="relative z-10 w-3 h-3 rounded-full border border-border bg-card flex items-center justify-center">
-                      <span className="text-[7px] font-sans text-muted-foreground">{fi + 1}</span>
+                      <span className="text-xs font-sans text-muted-foreground">{fi + 1}</span>
                     </div>
                   )}
                 </div>
@@ -133,7 +133,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
         ))}
 
         {tuning.length > 6 && (
-          <p className="text-[9px] font-sans text-muted-foreground mt-1 ml-8">
+          <p className="text-xs font-sans text-muted-foreground mt-1 ml-8">
             +{tuning.length - 6} more strings
           </p>
         )}
@@ -255,7 +255,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
       <Box className="p-3">
         <div className="flex items-center justify-between mb-2">
           <SectionLabel>Fretboard Preview</SectionLabel>
-          <span className="text-sm font-sans text-muted-foreground border border-border rounded px-1.5 py-0.5 bg-muted">
+          <span className="text-sm font-sans font-semibold text-muted-foreground border border-border rounded px-1.5 py-0.5 bg-muted">
             {active.label}
           </span>
         </div>

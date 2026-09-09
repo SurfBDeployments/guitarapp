@@ -138,7 +138,7 @@ export function WireframeSongs() {
           </button>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-foreground truncate">{activeSong.title}</p>
-            <p className="text-sm font-sans text-muted-foreground">{activeSong.artist}</p>
+            <p className="text-sm font-sans font-normal text-muted-foreground">{activeSong.artist}</p>
           </div>
           <button
             onClick={() => setAutoScroll(a => !a)}
@@ -244,12 +244,12 @@ export function WireframeSongs() {
           >
             <span className="text-sm font-sans text-muted-foreground w-4 shrink-0 mt-0.5">{i + 1}</span>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">{song.title}</p>
+              <p className="text-sm font-bold text-foreground truncate">{song.title}</p>
               <p className="text-sm font-sans text-muted-foreground">{song.artist}</p>
               <div className="flex gap-1 mt-1 flex-wrap">
-                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
-                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
-                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
+                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
+                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
+                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
               </div>
             </div>
             <ChevronRight size={13} className="text-muted-foreground shrink-0 mt-1" />
@@ -257,7 +257,7 @@ export function WireframeSongs() {
         ))}
       </Box>
 
-      <p className="text-[9px] font-sans text-muted-foreground">
+      <p className="text-xs font-sans text-muted-foreground">
         [Tap a song to open chord+lyric view with auto-scroll]
       </p>
     </div>

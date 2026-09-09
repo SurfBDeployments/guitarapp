@@ -28,17 +28,17 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
             key={n.id}
             onClick={() => onSelect(n.id)}
             className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
-              active ? "bg-foreground/5 text-amber-600" : "text-muted-foreground hover:bg-muted/50"
+              active
+                ? "text-amber-600"   // ← color on the button
+                : "text-primary hover:bg-muted/50"    // ← default on the button
             }`}
           >
-            <Icon size={18} />
-            <span
-              className={`text-sm font-sans ${active ? "text-foreground font-bold" : "text-muted-foreground"}`}
-            >
+            <Icon size={18} />  {/* inherits text-amber-600 or text-primary via currentColor */}
+            <span className={`text-sm font-sans ${active ? "font-semibold" : "font-normal"}`}>
               {n.label}
             </span>
             {active && (
-              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-foreground" />
+              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-amber-600" />
             )}
           </button>
         );
@@ -47,15 +47,12 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
   );
 }
 
+
 export default function App() {
   const [screen, setScreen] = useState<Screen>("instrument");
 
   function handleNavigateToTuner() {
     setScreen("tune");
-  }
-
-  function handleGoBack() {
-    window.history.back();
   }
 
   return (
@@ -81,18 +78,18 @@ export default function App() {
         >
           {/* Status bar */}
           <div className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-border shrink-0" style={{ background: "rgba(255,232,163,0.85)" }}>
-            <span className="text-[11px] font-sans text-muted-foreground">9:41</span>
+            <span className="text-sm font-sans text-primary">9:41</span>
             {/* Notch pill */}
             <div className="w-24 h-5 rounded-full bg-[#222] absolute left-1/2 -translate-x-1/2 top-2" />
             <div className="flex items-center gap-1">
-              <span className="text-[11px] font-sans text-muted-foreground">●●●</span>
+              <span className="text-sm font-sans text-primary">●●●</span>
             </div>
           </div>
 
           {/* App header - Fixed hex syntax */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border">
             <div className="flex items-center gap-2">
-            
+
               <span className="font-sans font-bold text-lg text-foreground tracking-wide">JamMaster Tuning</span>
             </div>
             <button
@@ -101,7 +98,7 @@ export default function App() {
               title="Open menu"
               className="w-7 h-7 rounded border border-border bg-muted flex items-center justify-center"
             >
-              <Menu size={16} className="text-muted-foreground" />
+              <Menu size={16} className="text-primary" />
             </button>
           </div>
 

@@ -94,7 +94,7 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
                   >
                     {isMarkerFret && (
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-sans font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-sans font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
                         style={{ background: color + "22", color, border: `1px solid ${color}44` }}
                         title={`${noteLetter} (fret ${fretIdx + 1})`}
                       >

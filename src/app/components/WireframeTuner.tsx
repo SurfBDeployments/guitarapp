@@ -17,7 +17,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+  return <p className="text-sm font-sans font-semibold text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
 }
 
 function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
@@ -38,9 +38,9 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
         )}
         <div className="absolute top-0 bottom-0 w-0.5 bg-foreground z-20 transition-all duration-300"
           style={{ left: `${pct}%` }} />
-        <span className="absolute left-2 text-[9px] font-sans text-muted-foreground">Flat</span>
-        <span className="absolute right-2 text-[9px] font-sans text-muted-foreground">Sharp</span>
-        <span className="absolute left-1/2 -translate-x-1/2 text-[9px] font-sans text-foreground/50">0ct</span>
+        <span className="absolute left-2 text-xs font-sans text-muted-foreground">Flat</span>
+        <span className="absolute right-2 text-xs font-sans text-muted-foreground">Sharp</span>
+        <span className="absolute left-1/2 -translate-x-1/2 text-xs font-sans text-foreground/50">0ct</span>
       </div>
       <div className="text-center h-5">
         {status === "idle"     && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
@@ -127,7 +127,7 @@ export function WireframeTuner() {
           <SectionLabel>Tuning Preset</SectionLabel>
           <button
             onClick={() => setShowDrop(d => !d)}
-            className="w-full flex items-center justify-between px-3 py-2 bg-muted border border-border rounded text-sm font-sans"
+            className="w-full flex font-semibold items-center justify-between px-3 py-2 bg-muted border border-border rounded text-sm font-sans"
           >
             <span>{activePreset.label}</span>
             <ChevronDown size={13} className={`transition-transform ${showDrop ? "rotate-180" : ""}`} />
@@ -151,7 +151,7 @@ export function WireframeTuner() {
           <div className="flex flex-wrap gap-2 mt-3">
             {activePreset.strings.map((n, i) => (
               <div key={i} className="flex flex-col items-center gap-0.5">
-                <span className="text-[9px] font-sans text-muted-foreground">{activePreset.hz[i]}Hz</span>
+                <span className="text-xs font-sans text-muted-foreground">{activePreset.hz[i]}Hz</span>
                 <span className="text-sm font-sans px-2 py-1 bg-muted border border-border rounded font-bold">{n}</span>
               </div>
             ))}
@@ -174,7 +174,7 @@ export function WireframeTuner() {
           <div className="grid grid-cols-3 gap-2">
             {customStrs.map((val, i) => (
               <div key={i} className="flex flex-col gap-0.5">
-                <span className="text-[9px] font-sans text-muted-foreground">Str {i + 1}</span>
+                <span className="text-xs font-sans text-muted-foreground">Str {i + 1}</span>
                 <input
                   value={val}
                   onChange={e => setCustomStrs(prev => { const n = [...prev]; n[i] = e.target.value; return n; })}
@@ -226,7 +226,7 @@ export function WireframeTuner() {
 
         {/* String grid */}
         <div className="w-full">
-          <p className="text-[9px] font-sans text-muted-foreground text-center mb-2">
+          <p className="text-xs font-sans text-muted-foreground text-center mb-2">
             {mic ? "[ Tap string or pluck to auto-detect ]" : "[ Enable mic to tune ]"}
           </p>
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(strings.length, 6)}, 1fr)` }}>
@@ -241,9 +241,9 @@ export function WireframeTuner() {
                     : "border-border bg-muted text-muted-foreground"
                 }`}
               >
-                <span className="text-[9px] opacity-50">{i + 1}</span>
+                <span className="text-xs opacity-50">{i + 1}</span>
                 <span className="font-bold">{note.replace(/[0-9]/g,"").toUpperCase()}</span>
-                {activeStr === i && status === "in-tune" && mic && <span className="text-[9px]">✓</span>}
+                {activeStr === i && status === "in-tune" && mic && <span className="text-xs">✓</span>}
               </button>
             ))}
           </div>

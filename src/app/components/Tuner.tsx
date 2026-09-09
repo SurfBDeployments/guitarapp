@@ -164,7 +164,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
       {tab === "presets" ? (
         <div className="rounded-xl border border-border bg-card p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-muted-foreground">Tuning Preset</span>
+            <span className=" text-muted-foreground">Tuning Preset</span>
             <button
               onClick={() => setShowPresets(!showPresets)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary text-foreground hover:border-primary/50 border border-border transition-all"
