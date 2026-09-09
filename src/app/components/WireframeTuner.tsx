@@ -17,8 +17,8 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-sans font-normal text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
-}
+  return <p className="text-sm font-sans font- text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+} 
 
 function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
   const clamped = Math.max(-50, Math.min(50, cents));
@@ -139,7 +139,7 @@ export function WireframeTuner() {
                   key={p.id}
                   onClick={() => { setPresetId(p.id); setShowDrop(false); }}
                   className={`w-full flex items-center justify-between px-3 py-2.5 text-left border-b border-border last:border-0 text-sm font-sans ${
-                    p.id === presetId ? "bg-foreground/5 text-foreground" : "text-muted-foreground"
+                    p.id === presetId ? "text-foreground" : "text-muted-foreground"
                   }`}
                 >
                   <span>{p.label}</span>

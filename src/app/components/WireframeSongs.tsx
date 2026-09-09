@@ -138,7 +138,7 @@ export function WireframeSongs() {
           </button>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-foreground truncate">{activeSong.title}</p>
-            <p className="text-sm font-sans font-normal text-muted-foreground">{activeSong.artist}</p>
+            <p className="text-sm font-sans font-normal text-foreground">{activeSong.artist}</p>
           </div>
           <button
             onClick={() => setAutoScroll(a => !a)}

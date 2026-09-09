@@ -17,7 +17,7 @@ const NAV: { id: Screen; label: string; icon: LucideIcon }[] = [
 export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; onSelect: (id: Screen) => void }) {
   return (
     <div
-      className="absolute bottom-0 left-0 right-0 border-t border-border flex items-stretch"
+      className="border-t border-border flex items-stretch"
       style={{ height: 64, background: "#ffffff" }}
     >
       {NAV.map((n) => {

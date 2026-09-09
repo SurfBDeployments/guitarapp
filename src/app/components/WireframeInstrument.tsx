@@ -222,7 +222,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
               onClick={() => setSelectedId(p.id)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded border text-left transition-colors ${
                 selectedId === p.id
-                  ? "border-foreground bg-foreground/5"
+                  ? "border-foreground"
                   : "border-border bg-card"
               }`}
             >
