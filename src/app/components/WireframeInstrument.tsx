@@ -1,6 +1,60 @@
 import { useState } from "react";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import Grid from "@mui/material/Grid";
+
+// 1. FIX: Use default imports without curly braces for static image assets
+import ukeleleImg from "../../imports/uke_sm.png";
+import ibanezImg from "../../imports/ibanez.png";
+import highendbassImg from "../../imports/highendbass.png";
 
 type InstrumentFamily = "guitar" | "bass" | "ukulele";
+
+interface InstrumentCardProps {
+  title: string;
+  image: string;
+  family: InstrumentFamily;
+  activeFamily: InstrumentFamily;
+  onSelect: (family: InstrumentFamily) => void;
+}
+
+function InstrumentCard({ title, image, family, activeFamily, onSelect }: InstrumentCardProps) {
+  const isActive = activeFamily === family;
+
+  return (
+    <Card
+      sx={{
+        width: 100,
+        height: 120,
+        border: isActive ? "2px solid #000" : "1px solid #e0e0e0",
+        borderRadius: 2,
+        transition: "all 0.2s ease",
+        boxShadow: isActive ? 2 : 0,
+        objectFit: "contain", // Scales images proportionally without stretching
+    p: 1,
+      }}
+    >
+      <CardActionArea onClick={() => onSelect(family)}>
+        {/* 2. FIX: Adjusted image height and sizing to fit the card */}
+        <CardMedia
+          component="img"
+          height="60"
+          image={image}
+          alt={title}
+          sx={{ objectFit: "contain", p: 1, backgroundColor: "#f9f9f9" }}
+        />
+        <CardContent sx={{ p: 0.5, textAlign: "center", "&:last-child": { pb: 1 } }}>
+          <Typography variant="caption" component="div" sx={{ fontWeight: isActive ? "bold" : "normal", fontSize: "0.7rem" }}>
+            {title}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  );
+}
 
 const GUITAR_PRESETS = [
   { id: "g6", label: "6-String Guitar", strings: 6, tuning: ["E", "A", "D", "G", "B", "e"] },
@@ -19,14 +73,14 @@ const UKULELE_PRESETS = [
 ];
 
 const FRET_MARKERS = [3, 5, 7, 9, 12];
-const FRET_COUNT = 7; // trimmed for mobile
+const FRET_COUNT = 7;
 
 function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">{children}</p>;
+  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-2">{children}</p>;
 }
 
 interface FretboardProps { tuning: string[]; family: InstrumentFamily }
@@ -38,12 +92,11 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
   return (
     <div className="overflow-x-auto">
       <div style={{ minWidth: 280 }}>
-        {/* Fret numbers */}
         <div className="flex ml-8 mb-0.5">
           <div className="w-4 shrink-0" />
           {Array.from({ length: FRET_COUNT }, (_, i) => (
             <div key={i} className="flex-1 text-center">
-              <span className="text-[9px] font-mono text-muted-foreground">{i + 1}</span>
+              <span className="text-[9px] font-sans text-muted-foreground">{i + 1}</span>
             </div>
           ))}
         </div>
@@ -51,11 +104,10 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
         {rows.map((note, si) => (
           <div key={si} className="flex items-center mb-0.5">
             <div className="w-8 shrink-0 flex justify-end pr-1">
-              <span className="text-[10px] font-mono font-bold px-1 py-0.5 bg-muted border border-border rounded">
+              <span className="text-sm font-sans font-bold px-1 py-0.5 bg-muted border border-border rounded">
                 {note}
               </span>
             </div>
-            {/* Nut */}
             <div className="w-0.5 self-stretch bg-foreground/50 shrink-0" />
             {Array.from({ length: FRET_COUNT }, (_, fi) => {
               const hasDot = FRET_MARKERS.includes(fi + 1);
@@ -71,7 +123,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
                   />
                   {hasDot && (
                     <div className="relative z-10 w-3 h-3 rounded-full border border-border bg-card flex items-center justify-center">
-                      <span className="text-[7px] font-mono text-muted-foreground">{fi + 1}</span>
+                      <span className="text-[7px] font-sans text-muted-foreground">{fi + 1}</span>
                     </div>
                   )}
                 </div>
@@ -81,12 +133,11 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
         ))}
 
         {tuning.length > 6 && (
-          <p className="text-[9px] font-mono text-muted-foreground mt-1 ml-8">
+          <p className="text-[9px] font-sans text-muted-foreground mt-1 ml-8">
             +{tuning.length - 6} more strings
           </p>
         )}
 
-        {/* Dot row */}
         <div className="flex ml-8 mt-0.5">
           <div className="w-4 shrink-0" />
           {Array.from({ length: FRET_COUNT }, (_, fi) => (
@@ -110,7 +161,6 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
   const [family, setFamily] = useState<InstrumentFamily>("guitar");
   const [selectedId, setSelectedId] = useState("g6");
 
-  // Lookup map for presets by family
   const PRESET_MAP = {
     guitar: GUITAR_PRESETS,
     bass: BASS_PRESETS,
@@ -132,28 +182,34 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
     setSelectedId(DEFAULT_ID_MAP[f]);
   };
 
+  const instrumentCards: { title: string; image: string; family: InstrumentFamily }[] = [
+    { title: "Guitar", image: ibanezImg, family: "guitar" },
+    { title: "Bass Guitar", image: highendbassImg, family: "bass" },
+    { title: "Ukulele", image: ukeleleImg, family: "ukulele" },
+  ];
+
   return (
     <div className="px-4 py-4 flex flex-col gap-4">
       {/* Header */}
       <div>
         <h2 className="text-base font-bold text-foreground mt-0.5">Pick Your Instrument</h2>
-        <p className="text-xs text-muted-foreground mt-0.5">Choose type and string configuration to begin.</p>
+        <p className="text-sm text-primary mt-0.5">Choose type and string configuration to begin.</p>
       </div>
 
-      {/* Family toggle */}
-      <div className="flex gap-1 p-1 bg-card border border-border rounded w-full">
-        {(["guitar", "bass", "ukulele"] as InstrumentFamily[]).map((f) => (
-          <button
-            key={f}
-            onClick={() => handleFamilyChange(f)}
-            className={`flex-1 py-2 rounded text-sm font-mono capitalize transition-colors ${
-              family === f ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-            }`}
-          >
-            {f === "guitar" ? "🎸" : "🎵"} {f}
-          </button>
+      {/* 3. FIX: Clean inline Grid mapping for the cards */}
+      <Grid container spacing={1} justifyContent="center">
+        {instrumentCards.map((card) => (
+          <Grid key={card.family}>
+            <InstrumentCard
+              title={card.title}
+              image={card.image}
+              family={card.family}
+              activeFamily={family}
+              onSelect={handleFamilyChange}
+            />
+          </Grid>
         ))}
-      </div>
+      </Grid>
 
       {/* Preset list */}
       <div>
@@ -169,26 +225,26 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
                   : "border-border bg-card"
               }`}
             >
-              <span className="font-mono text-2xl text-muted-foreground w-7 text-center shrink-0">
+              <span className="font-sans text-2xl text-muted-foreground w-7 text-center shrink-0">
                 {p.strings}
               </span>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium text-foreground">{p.label}</div>
                 <div className="flex gap-1 mt-1 flex-wrap">
                   {p.tuning.slice(0, Math.min(p.strings, 6)).map((n, i) => (
-                    <span key={i} className="text-[10px] font-mono px-1 py-0.5 bg-muted border border-border rounded">
+                    <span key={i} className="text-sm font-sans px-1 py-0.5 bg-muted border border-border rounded">
                       {n}
                     </span>
                   ))}
                   {p.strings > 6 && (
-                    <span className="text-[10px] font-mono px-1 py-0.5 bg-muted border border-border rounded text-muted-foreground">
+                    <span className="text-sm font-sans px-1 py-0.5 bg-muted border border-border rounded text-muted-foreground">
                       +{p.strings - 6}
                     </span>
                   )}
                 </div>
               </div>
               {selectedId === p.id && (
-                <span className="text-xs font-mono text-foreground shrink-0">✓</span>
+                <span className="text-sm font-sans text-foreground shrink-0">✓</span>
               )}
             </button>
           ))}
@@ -199,20 +255,17 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
       <Box className="p-3">
         <div className="flex items-center justify-between mb-2">
           <SectionLabel>Fretboard Preview</SectionLabel>
-          <span className="text-[10px] font-mono text-muted-foreground border border-border rounded px-1.5 py-0.5 bg-muted">
+          <span className="text-sm font-sans text-muted-foreground border border-border rounded px-1.5 py-0.5 bg-muted">
             {active.label}
           </span>
         </div>
         <MobileFretboard tuning={active.tuning} family={family} />
-        <p className="text-[9px] font-mono text-muted-foreground mt-2">
-          [Toggles between bass, guitar & ukulele · notes update per tuning]
-        </p>
       </Box>
 
       {/* CTA */}
       <button
         onClick={() => onNavigateToTuner({ id: active.id, label: active.label, tuning: active.tuning, family })}
-        className="w-full py-3.5 rounded border border-foreground bg-primary text-primary-foreground font-mono text-sm font-bold"
+        className="w-full py-3.5 rounded border border-foreground bg-primary text-primary-foreground font-sans text-sm font-bold"
       >
         → Tune {active.label}
       </button>

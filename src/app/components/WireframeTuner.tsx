@@ -7,6 +7,8 @@ const PRESETS = [
   { id: "open-g",       label: "Open G",                strings: ["D","G","D","G","B","d"],  hz: [73,98,147,196,247,294]  },
   { id: "std-bass",     label: "Standard Bass (EADG)",  strings: ["E","A","D","G"],          hz: [41,55,73,98]            },
   { id: "drop-d-bass",  label: "Drop D Bass",           strings: ["D","A","D","G"],          hz: [37,55,73,98]            },
+  { id: "standard-ukulele", label: "Standard Ukulele (GCEA)", strings: ["G", "C", "E", "A"], hz: [37,55,73,98] },
+  { id: "ukulele-adfb", label: "Ukulele (ADF#B)", strings: ["A", "D", "F", "#B"], hz: [37,55,73,98]},
 ];
 
 type TuneStatus = "in-tune" | "sharp" | "flat" | "idle";
@@ -15,7 +17,7 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
 }
 
 function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
@@ -36,15 +38,15 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
         )}
         <div className="absolute top-0 bottom-0 w-0.5 bg-foreground z-20 transition-all duration-300"
           style={{ left: `${pct}%` }} />
-        <span className="absolute left-2 text-[9px] font-mono text-muted-foreground">Flat</span>
-        <span className="absolute right-2 text-[9px] font-mono text-muted-foreground">Sharp</span>
-        <span className="absolute left-1/2 -translate-x-1/2 text-[9px] font-mono text-foreground/50">0¢</span>
+        <span className="absolute left-2 text-[9px] font-sans text-muted-foreground">Flat</span>
+        <span className="absolute right-2 text-[9px] font-sans text-muted-foreground">Sharp</span>
+        <span className="absolute left-1/2 -translate-x-1/2 text-[9px] font-sans text-foreground/50">0ct</span>
       </div>
       <div className="text-center h-5">
-        {status === "idle"     && <span className="text-xs font-mono text-muted-foreground">[ Pluck a string ]</span>}
-        {status === "in-tune"  && <span className="text-xs font-mono text-foreground font-bold">✓ In Tune</span>}
-        {status === "sharp"    && <span className="text-xs font-mono text-foreground">▲ {Math.abs(cents)}¢ Sharp</span>}
-        {status === "flat"     && <span className="text-xs font-mono text-foreground">▼ {Math.abs(cents)}¢ Flat</span>}
+        {status === "idle"     && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
+        {status === "in-tune"  && <span className="text-sm font-sans text-foreground font-bold">✓ In Tune</span>}
+        {status === "sharp"    && <span className="text-sm font-sans text-foreground">▲ {Math.abs(cents)} ct Sharp</span>}
+        {status === "flat"     && <span className="text-sm font-sans text-foreground">▼ {Math.abs(cents)} ct Flat</span>}
       </div>
     </div>
   );
@@ -91,11 +93,11 @@ export function WireframeTuner() {
         <div>
       
           <h2 className="text-base font-bold text-foreground mt-0.5">Tuner</h2>
-          <p className="text-xs text-muted-foreground">Auto-detect sharp / flat per string.</p>
+          <p className="text-xs text-primary">Auto-detect sharp / flat per string.</p>
         </div>
         <button
           onClick={() => { setMic(m => !m); if (mic) { setStatus("idle"); setDetected(null); setActiveStr(null); } }}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded border text-xs font-mono whitespace-nowrap shrink-0 mt-1 ${
+          className={`flex items-center gap-1.5 px-3 py-2 rounded border text-sm font-sans whitespace-nowrap shrink-0 mt-1 ${
             mic ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border text-foreground"
           }`}
         >
@@ -110,7 +112,7 @@ export function WireframeTuner() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`flex-1 py-1.5 rounded text-xs font-mono capitalize transition-colors ${
+            className={`flex-1 py-1.5 rounded text-sm font-sans capitalize transition-colors ${
               tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
           >
@@ -125,7 +127,7 @@ export function WireframeTuner() {
           <SectionLabel>Tuning Preset</SectionLabel>
           <button
             onClick={() => setShowDrop(d => !d)}
-            className="w-full flex items-center justify-between px-3 py-2 bg-muted border border-border rounded text-sm font-mono"
+            className="w-full flex items-center justify-between px-3 py-2 bg-muted border border-border rounded text-sm font-sans"
           >
             <span>{activePreset.label}</span>
             <ChevronDown size={13} className={`transition-transform ${showDrop ? "rotate-180" : ""}`} />
@@ -136,7 +138,7 @@ export function WireframeTuner() {
                 <button
                   key={p.id}
                   onClick={() => { setPresetId(p.id); setShowDrop(false); }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 text-left border-b border-border last:border-0 text-xs font-mono ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 text-left border-b border-border last:border-0 text-sm font-sans ${
                     p.id === presetId ? "bg-foreground/5 text-foreground" : "text-muted-foreground"
                   }`}
                 >
@@ -149,8 +151,8 @@ export function WireframeTuner() {
           <div className="flex flex-wrap gap-2 mt-3">
             {activePreset.strings.map((n, i) => (
               <div key={i} className="flex flex-col items-center gap-0.5">
-                <span className="text-[9px] font-mono text-muted-foreground">{activePreset.hz[i]}Hz</span>
-                <span className="text-xs font-mono px-2 py-1 bg-muted border border-border rounded font-bold">{n}</span>
+                <span className="text-[9px] font-sans text-muted-foreground">{activePreset.hz[i]}Hz</span>
+                <span className="text-sm font-sans px-2 py-1 bg-muted border border-border rounded font-bold">{n}</span>
               </div>
             ))}
           </div>
@@ -164,7 +166,7 @@ export function WireframeTuner() {
             <SectionLabel>Custom Frequencies</SectionLabel>
             <button
               onClick={() => setShowSave(s => !s)}
-              className="flex items-center gap-1 px-2 py-1 text-[10px] font-mono border border-border rounded bg-muted"
+              className="flex items-center gap-1 px-2 py-1 text-sm font-sans border border-border rounded bg-muted"
             >
               <Save size={10} /> Save
             </button>
@@ -172,11 +174,11 @@ export function WireframeTuner() {
           <div className="grid grid-cols-3 gap-2">
             {customStrs.map((val, i) => (
               <div key={i} className="flex flex-col gap-0.5">
-                <span className="text-[9px] font-mono text-muted-foreground">Str {i + 1}</span>
+                <span className="text-[9px] font-sans text-muted-foreground">Str {i + 1}</span>
                 <input
                   value={val}
                   onChange={e => setCustomStrs(prev => { const n = [...prev]; n[i] = e.target.value; return n; })}
-                  className="w-full bg-muted border border-border rounded px-2 py-1 text-xs font-mono text-foreground focus:outline-none focus:border-foreground/60"
+                  className="w-full bg-muted border border-border rounded px-2 py-1 text-sm font-sans text-foreground focus:outline-none focus:border-foreground/60"
                   placeholder="E2"
                 />
               </div>
@@ -188,9 +190,9 @@ export function WireframeTuner() {
                 value={saveName}
                 onChange={e => setSaveName(e.target.value)}
                 placeholder="Preset name…"
-                className="flex-1 bg-muted border border-border rounded px-2 py-1.5 text-xs font-mono text-foreground focus:outline-none"
+                className="flex-1 bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none"
               />
-              <button onClick={saveCustom} className="flex items-center gap-1 px-3 py-1.5 rounded border border-foreground bg-primary text-primary-foreground text-xs font-mono">
+              <button onClick={saveCustom} className="flex items-center gap-1 px-3 py-1.5 rounded border border-foreground bg-primary text-primary-foreground text-sm font-sans">
                 <Plus size={11} /> Add
               </button>
               <button onClick={() => setShowSave(false)} className="px-2 py-1.5 rounded border border-border text-muted-foreground">
@@ -201,7 +203,7 @@ export function WireframeTuner() {
           {savedPresets.length > 0 && (
             <div className="mt-2 border-t border-border pt-2 flex flex-col gap-1">
               {savedPresets.map((cp, i) => (
-                <div key={i} className="flex items-center justify-between text-[10px] font-mono bg-muted border border-border rounded px-2 py-1.5">
+                <div key={i} className="flex items-center justify-between text-sm font-sans bg-muted border border-border rounded px-2 py-1.5">
                   <span className="text-foreground">{cp.label}</span>
                   <span className="text-muted-foreground">{cp.strings.join(" ")}</span>
                 </div>
@@ -215,7 +217,7 @@ export function WireframeTuner() {
       <Box className="p-4 flex flex-col items-center gap-3">
         {/* Big detected note */}
         <div className="w-16 h-16 rounded border-2 border-border bg-muted flex items-center justify-center">
-          <span className="font-mono text-3xl font-bold text-foreground">{detected ?? "—"}</span>
+          <span className="font-sans text-3xl font-bold text-foreground">{detected ?? "—"}</span>
         </div>
 
         <div className="w-full">
@@ -224,7 +226,7 @@ export function WireframeTuner() {
 
         {/* String grid */}
         <div className="w-full">
-          <p className="text-[9px] font-mono text-muted-foreground text-center mb-2">
+          <p className="text-[9px] font-sans text-muted-foreground text-center mb-2">
             {mic ? "[ Tap string or pluck to auto-detect ]" : "[ Enable mic to tune ]"}
           </p>
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(strings.length, 6)}, 1fr)` }}>
@@ -233,7 +235,7 @@ export function WireframeTuner() {
                 key={i}
                 onClick={() => pluck(i)}
                 disabled={!mic}
-                className={`flex flex-col items-center py-2 rounded border text-xs font-mono transition-colors disabled:opacity-40 ${
+                className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-40 ${
                   activeStr === i && mic
                     ? "border-foreground bg-foreground/10 text-foreground"
                     : "border-border bg-muted text-muted-foreground"
@@ -254,8 +256,8 @@ export function WireframeTuner() {
           <Mic size={12} className="text-muted-foreground" />
         </div>
         <div>
-          <p className="text-xs font-medium text-foreground">Auto Mode</p>
-          <p className="text-[11px] text-muted-foreground mt-0.5 font-mono leading-relaxed">
+          <p className="text-md font-semibold text-foreground">Auto Mode</p>
+          <p className="text-[14px] text-primary mt-0.5 font-sans leading-relaxed">
       
             The microphone automatically recognize which string the user is plucking and show them visually if it is sharp or flat.
           </p>

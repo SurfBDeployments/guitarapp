@@ -53,9 +53,9 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
     <div className="w-full overflow-x-auto">
       <div className="min-w-[640px]">
         <div className="flex items-center mb-2">
-          <div className="w-10 text-center text-xs text-muted-foreground font-mono">Open</div>
+          <div className="w-10 text-center text-sm text-primary font-sans">Open</div>
           {Array.from({ length: frets }, (_, i) => (
-            <div key={i} className="flex-1 text-center text-xs text-muted-foreground font-mono relative">
+            <div key={i} className="flex-1 text-center text-sm text-primary font-sans relative">
               {i + 1}
               {dotFrets.includes(i + 1) && (
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-muted-foreground/40" />
@@ -67,7 +67,7 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
         {displayTuning.map((openNote, stringIdx) => (
           <div key={stringIdx} className="flex items-center mb-1">
             <div
-              className="w-10 h-7 rounded flex items-center justify-center text-xs font-mono font-bold border"
+              className="w-10 h-7 rounded flex items-center justify-center text-sm font-sans font-bold border"
               style={{ color: getNoteColor(openNote), borderColor: getNoteColor(openNote) + "44", background: getNoteColor(openNote) + "18" }}
             >
               {openNote.replace(/[0-9]/g, "")}
@@ -94,7 +94,7 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
                   >
                     {isMarkerFret && (
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-mono font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-sans font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
                         style={{ background: color + "22", color, border: `1px solid ${color}44` }}
                         title={`${noteLetter} (fret ${fretIdx + 1})`}
                       >
@@ -109,7 +109,7 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
         ))}
 
         {strings > 6 && (
-          <p className="text-xs text-muted-foreground mt-2 text-center">
+          <p className="text-sm text-primary mt-2 text-center">
             Showing 6 of {strings} strings · Full view available in Tuner
           </p>
         )}
@@ -179,7 +179,7 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
               {isActive && (
                 <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary" />
               )}
-              <div className={`font-mono text-2xl mb-1 ${isActive ? "text-primary" : "text-muted-foreground"}`}>
+              <div className={`font-sans text-2xl mb-1 ${isActive ? "text-primary" : "text-muted-foreground"}`}>
                 {preset.strings}
               </div>
               <div className="text-foreground">{preset.label}</div>
@@ -187,7 +187,7 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
                 {preset.tuning.slice(0, preset.strings > 6 ? 6 : preset.strings).map((note, i) => (
                   <span
                     key={i}
-                    className="text-xs font-mono px-1.5 py-0.5 rounded"
+                    className="text-sm font-sans px-1.5 py-0.5 rounded"
                     style={{
                       color: getNoteColor(note),
                       background: getNoteColor(note) + "18",
@@ -198,7 +198,7 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
                   </span>
                 ))}
                 {preset.strings > 6 && (
-                  <span className="text-xs font-mono px-1.5 py-0.5 rounded text-muted-foreground bg-muted">
+                  <span className="text-sm font-sans px-1.5 py-0.5 rounded text-muted-foreground bg-muted">
                     +{preset.strings - 6}
                   </span>
                 )}
@@ -212,7 +212,7 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
       <div className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-foreground">Fretboard Preview</h3>
-          <span className="text-xs text-muted-foreground font-mono uppercase tracking-widest">
+          <span className="text-sm text-primary font-sans uppercase tracking-widest">
             {activePreset.label}
           </span>
         </div>

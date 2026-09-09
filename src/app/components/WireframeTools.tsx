@@ -55,12 +55,12 @@ function Box({ children, className="" }: { children: React.ReactNode; className?
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
 }
 function NoteSelect({ value, onChange }: { value: string; onChange: (v:string)=>void }) {
   return (
     <select value={value} onChange={e=>onChange(e.target.value)}
-      className="bg-muted border border-border rounded px-2 py-1.5 text-xs font-mono text-foreground focus:outline-none">
+      className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none">
       {NOTES.map(n=><option key={n}>{n}</option>)}
     </select>
   );
@@ -77,7 +77,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
           <div className="w-4" />
           {Array.from({ length: FRET_COUNT }, (_,i) => (
             <div key={i} className="flex-1 text-center">
-              <span className="text-[8px] font-mono text-muted-foreground">{i+1}</span>
+              <span className="text-[8px] font-sans text-muted-foreground">{i+1}</span>
             </div>
           ))}
         </div>
@@ -87,7 +87,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
           return (
             <div key={si} className="flex items-center mb-0.5">
               <div className="w-7 shrink-0 flex justify-end pr-1">
-                <span className={`text-[9px] font-mono px-1 py-0.5 rounded border ${
+                <span className={`text-[9px] font-sans px-1 py-0.5 rounded border ${
                   openHL ? "bg-foreground text-primary-foreground border-foreground" : "bg-muted border-border text-muted-foreground"
                 }`}>{openLetter}</span>
               </div>
@@ -102,7 +102,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
                     <div className="absolute left-0 right-0 bg-foreground/20" style={{ height:1 }} />
                     {hl ? (
                       <div className="relative z-10 w-4 h-4 rounded-full bg-foreground flex items-center justify-center">
-                        <span className="text-[7px] font-mono font-bold text-primary-foreground">{note}</span>
+                        <span className="text-[7px] font-sans font-bold text-primary-foreground">{note}</span>
                       </div>
                     ) : dot ? (
                       <div className="relative z-10 w-2.5 h-2.5 rounded-full border border-border bg-card" />
@@ -113,7 +113,7 @@ function MobileFretboard({ highlight, label }: { highlight: string[]; label: str
             </div>
           );
         })}
-        <p className="text-[8px] font-mono text-muted-foreground mt-1 ml-7">
+        <p className="text-[8px] font-sans text-muted-foreground mt-1 ml-7">
           ● = {label} · frets 1–{FRET_COUNT}
         </p>
       </div>
@@ -140,7 +140,7 @@ function ChordFinder() {
         <div className="flex flex-col gap-0.5 flex-1">
           <SectionLabel>Chord Type</SectionLabel>
           <select value={type} onChange={e=>setType(e.target.value)}
-            className="bg-muted border border-border rounded px-2 py-1.5 text-xs font-mono text-foreground focus:outline-none w-full">
+            className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none w-full">
             {Object.keys(CHORD_TYPES).map(k=><option key={k}>{k}</option>)}
           </select>
         </div>
@@ -148,17 +148,17 @@ function ChordFinder() {
 
       {/* Result badge */}
       <div className="flex items-center gap-2 px-3 py-2 bg-muted border border-border rounded">
-        <span className="text-sm font-mono font-bold text-foreground">{root} {type}</span>
+        <span className="text-sm font-sans font-bold text-foreground">{root} {type}</span>
         <span className="text-muted-foreground">·</span>
-        <span className="text-xs font-mono text-muted-foreground">{notes.join(" – ")}</span>
+        <span className="text-sm font-sans text-muted-foreground">{notes.join(" – ")}</span>
       </div>
 
       {/* Note circles */}
       <div className="flex gap-2">
         {notes.map((n,i) => (
           <div key={i} className="flex flex-col items-center gap-0.5">
-            <span className="text-[9px] font-mono text-muted-foreground">{labels[i]}</span>
-            <div className={`w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-mono font-bold ${
+            <span className="text-[9px] font-sans text-muted-foreground">{labels[i]}</span>
+            <div className={`w-9 h-9 rounded-full border-2 flex items-center justify-center text-sm font-sans font-bold ${
               i===0 ? "bg-foreground border-foreground text-primary-foreground" : "bg-muted border-border text-foreground"
             }`}>{n}</div>
           </div>
@@ -192,7 +192,7 @@ function ScaleFinder() {
         <div className="flex flex-col gap-0.5 flex-1">
           <SectionLabel>Scale Type</SectionLabel>
           <select value={scale} onChange={e=>setScale(e.target.value)}
-            className="bg-muted border border-border rounded px-2 py-1.5 text-xs font-mono text-foreground focus:outline-none w-full">
+            className="bg-muted border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:outline-none w-full">
             {Object.keys(SCALE_TYPES).map(k=><option key={k}>{k}</option>)}
           </select>
         </div>
@@ -201,7 +201,7 @@ function ScaleFinder() {
       {/* Notes */}
       <div className="flex flex-wrap gap-1">
         {notes.map((n,i) => (
-          <span key={i} className={`px-2 py-1 rounded border text-[10px] font-mono font-bold ${
+          <span key={i} className={`px-2 py-1 rounded border text-sm font-sans font-bold ${
             i===0 ? "bg-foreground text-primary-foreground border-foreground" : "bg-muted text-foreground border-border"
           }`}>
             {i===0 ? `R:${n}` : n}
@@ -230,7 +230,7 @@ export function WireframeTools() {
       <div>
     
         <h2 className="text-base font-bold text-foreground mt-0.5">Tools</h2>
-        <p className="text-xs text-muted-foreground">Chord Finder · Scale Finder</p>
+        <p className="text-sm text-primary">Chord Finder · Scale Finder</p>
       </div>
 
       {/* Tabs */}
@@ -242,7 +242,7 @@ export function WireframeTools() {
           <button
             key={t.id}
             onClick={() => setTool(t.id)}
-            className={`flex-1 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`flex-1 py-1.5 rounded text-sm font-sans transition-colors ${
               tool===t.id ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
           >

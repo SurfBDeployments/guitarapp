@@ -85,13 +85,13 @@ function Box({ children, className = "" }: { children: React.ReactNode; classNam
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+  return <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
 }
 
 function ChordToken({ chord }: { chord: string }) {
   if (!chord.trim()) return <span className="inline-block w-12" />;
   return (
-    <span className="inline-block text-[10px] font-mono font-bold text-foreground bg-muted border border-border rounded px-1 py-0.5 mr-1 min-w-[40px] text-center">
+    <span className="inline-block text-sm font-sans font-bold text-foreground bg-muted border border-border rounded px-1 py-0.5 mr-1 min-w-[40px] text-center">
       {chord}
     </span>
   );
@@ -138,11 +138,11 @@ export function WireframeSongs() {
           </button>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-foreground truncate">{activeSong.title}</p>
-            <p className="text-[10px] font-mono text-muted-foreground">{activeSong.artist}</p>
+            <p className="text-sm font-sans text-muted-foreground">{activeSong.artist}</p>
           </div>
           <button
             onClick={() => setAutoScroll(a => !a)}
-            className={`flex items-center gap-1 px-2.5 py-1.5 rounded border text-[10px] font-mono shrink-0 ${
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded border text-sm font-sans shrink-0 ${
               autoScroll ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-border text-foreground"
             }`}
           >
@@ -154,17 +154,17 @@ export function WireframeSongs() {
         {/* Meta tags */}
         <div className="px-4 py-2 bg-card border-b border-border flex flex-wrap gap-1.5">
           {[activeSong.key, activeSong.tempo, activeSong.tuning, activeSong.difficulty].map((tag, i) => (
-            <span key={i} className="text-[10px] font-mono px-1.5 py-0.5 bg-muted border border-border rounded">{tag}</span>
+            <span key={i} className="text-sm font-sans px-1.5 py-0.5 bg-muted border border-border rounded">{tag}</span>
           ))}
           {autoScroll && (
             <div className="flex items-center gap-1.5 ml-auto">
-              <span className="text-[10px] font-mono text-muted-foreground">Speed</span>
+              <span className="text-sm font-sans text-muted-foreground">Speed</span>
               <input
                 type="range" min={1} max={6} value={speed}
                 onChange={e => setSpeed(Number(e.target.value))}
                 className="w-16 accent-foreground"
               />
-              <span className="text-[10px] font-mono text-muted-foreground">{speed}x</span>
+              <span className="text-sm font-sans text-muted-foreground">{speed}x</span>
             </div>
           )}
         </div>
@@ -173,7 +173,7 @@ export function WireframeSongs() {
         <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4">
           {activeSong.sections.map((sec, si) => (
             <div key={si} className="mb-6">
-              <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest border-b border-border pb-1 mb-3">
+              <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest border-b border-border pb-1 mb-3">
                 {sec.name}
               </p>
               {sec.lines.map((line, li) => (
@@ -181,12 +181,12 @@ export function WireframeSongs() {
                   <div className="flex flex-wrap mb-0.5">
                     {line.chords.map((ch, ci) => <ChordToken key={ci} chord={ch} />)}
                   </div>
-                  <p className="text-xs font-mono text-foreground leading-relaxed">{line.lyric}</p>
+                  <p className="text-sm font-sans text-foreground leading-relaxed">{line.lyric}</p>
                 </div>
               ))}
             </div>
           ))}
-          <div className="py-6 text-center text-[10px] font-mono text-muted-foreground border-t border-border">
+          <div className="py-6 text-center text-sm font-sans text-muted-foreground border-t border-border">
             [ End of song ]
           </div>
         </div>
@@ -202,7 +202,7 @@ export function WireframeSongs() {
       <div>
        
         <h2 className="text-base font-bold text-foreground mt-0.5">Songs</h2>
-        <p className="text-xs text-muted-foreground">Search lyrics & chords — auto-scroll while you play.</p>
+        <p className="text-sm text-primary">Search lyrics & chords — auto-scroll while you play.</p>
       </div>
 
       {/* Search */}
@@ -212,7 +212,7 @@ export function WireframeSongs() {
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search songs or artists…"
-          className="w-full pl-8 pr-4 py-2 bg-card border border-border rounded text-xs font-mono text-foreground focus:outline-none focus:border-foreground/60 placeholder:text-muted-foreground"
+          className="w-full pl-8 pr-4 py-2 bg-card border border-border rounded text-sm font-sans text-foreground focus:outline-none focus:border-foreground/60 placeholder:text-muted-foreground"
         />
       </div>
 
@@ -222,7 +222,7 @@ export function WireframeSongs() {
           <button
             key={d}
             onClick={() => setDifficulty(d)}
-            className={`flex-1 py-1 rounded text-[10px] font-mono transition-colors ${
+            className={`flex-1 py-1 rounded text-sm font-sans transition-colors ${
               difficulty === d ? "bg-primary text-primary-foreground" : "text-muted-foreground"
             }`}
           >
@@ -234,7 +234,7 @@ export function WireframeSongs() {
       {/* Song list */}
       <Box>
         {filtered.length === 0 && (
-          <p className="px-4 py-6 text-center text-xs font-mono text-muted-foreground">No songs found</p>
+          <p className="px-4 py-6 text-center text-sm font-sans text-muted-foreground">No songs found</p>
         )}
         {filtered.map((song, i) => (
           <button
@@ -242,14 +242,14 @@ export function WireframeSongs() {
             onClick={() => setSelected(song.id)}
             className="w-full flex items-start gap-3 px-4 py-3 text-left border-b border-border last:border-0 active:bg-muted/50"
           >
-            <span className="text-[10px] font-mono text-muted-foreground w-4 shrink-0 mt-0.5">{i + 1}</span>
+            <span className="text-sm font-sans text-muted-foreground w-4 shrink-0 mt-0.5">{i + 1}</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">{song.title}</p>
-              <p className="text-[10px] font-mono text-muted-foreground">{song.artist}</p>
+              <p className="text-sm font-sans text-muted-foreground">{song.artist}</p>
               <div className="flex gap-1 mt-1 flex-wrap">
-                <span className="text-[9px] font-mono px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
-                <span className="text-[9px] font-mono px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
-                <span className="text-[9px] font-mono px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
+                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
+                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
+                <span className="text-[9px] font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
               </div>
             </div>
             <ChevronRight size={13} className="text-muted-foreground shrink-0 mt-1" />
@@ -257,7 +257,7 @@ export function WireframeSongs() {
         ))}
       </Box>
 
-      <p className="text-[9px] font-mono text-muted-foreground">
+      <p className="text-[9px] font-sans text-muted-foreground">
         [Tap a song to open chord+lyric view with auto-scroll]
       </p>
     </div>

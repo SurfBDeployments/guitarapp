@@ -3,7 +3,7 @@ import { WireframeInstrument } from "./components/WireframeInstrument";
 import { WireframeTuner } from "./components/WireframeTuner";
 import { WireframeSongs } from "./components/WireframeSongs";
 import { WireframeTools } from "./components/WireframeTools";
-import { Guitar, SlidersVertical, Music4, SlidersHorizontal, LucideIcon, ArrowLeft, Menu } from "lucide-react";
+import { Guitar, SlidersVertical, Music4, SlidersHorizontal, LucideIcon, Menu } from "lucide-react";
 
 type Screen = "instrument" | "tune" | "music" | "tools";
 
@@ -33,7 +33,7 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
           >
             <Icon size={18} />
             <span
-              className={`text-[10px] font-mono ${active ? "text-foreground font-bold" : "text-muted-foreground"}`}
+              className={`text-sm font-sans ${active ? "text-foreground font-bold" : "text-muted-foreground"}`}
             >
               {n.label}
             </span>
@@ -64,7 +64,7 @@ export default function App() {
       <div className="flex flex-col items-center gap-3">
 
         {/* Desktop label */}
-        <div className="text-xs font-mono text-[#666] uppercase tracking-widest">
+        <div className="text-sm font-sans text-[#666] uppercase tracking-widest">
           JamMaster Tuning · Mobile Wireframe · 390 × 844
         </div>
 
@@ -81,19 +81,19 @@ export default function App() {
         >
           {/* Status bar */}
           <div className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-border shrink-0" style={{ background: "rgba(255,232,163,0.85)" }}>
-            <span className="text-[11px] font-mono text-muted-foreground">9:41</span>
+            <span className="text-[11px] font-sans text-muted-foreground">9:41</span>
             {/* Notch pill */}
             <div className="w-24 h-5 rounded-full bg-[#222] absolute left-1/2 -translate-x-1/2 top-2" />
             <div className="flex items-center gap-1">
-              <span className="text-[11px] font-mono text-muted-foreground">●●●</span>
+              <span className="text-[11px] font-sans text-muted-foreground">●●●</span>
             </div>
           </div>
 
           {/* App header - Fixed hex syntax */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-border" style={{ background: "#ffffff" }}>
+          <div className="flex items-center justify-between px-5 py-3 border-b border-border">
             <div className="flex items-center gap-2">
             
-              <span className="font-mono font-bold text-md text-foreground tracking-wide">JamMaster Tuning</span>
+              <span className="font-sans font-bold text-lg text-foreground tracking-wide">JamMaster Tuning</span>
             </div>
             <button
               type="button"
@@ -121,7 +121,7 @@ export default function App() {
         </div>
 
         {/* Screen label below phone */}
-        <div className="text-xs font-mono text-[#888]">
+        <div className="text-sm font-sans text-[#888]">
           Active: <span className="text-[#333] font-bold">{NAV.find(n => n.id === screen)?.label}</span>
           {" · "}tap nav to switch screens
         </div>

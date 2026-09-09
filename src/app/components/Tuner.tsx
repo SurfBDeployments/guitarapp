@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mic, MicOff, Save, Plus, ChevronDown } from "lucide-react";
 
 type TuningPreset = {
   id: string;
   label: string;
   strings: string[];
-  type: "guitar" | "bass";
+  type: "guitar" | "bass" | "ukulele";
 };
 
 const TUNING_PRESETS: TuningPreset[] = [
@@ -14,6 +14,8 @@ const TUNING_PRESETS: TuningPreset[] = [
   { id: "open-g", label: "Open G", strings: ["D2", "G2", "D3", "G3", "B3", "D4"], type: "guitar" },
   { id: "standard-bass", label: "Standard Bass (EADG)", strings: ["E1", "A1", "D2", "G2"], type: "bass" },
   { id: "drop-d-bass", label: "Drop D Bass", strings: ["D1", "A1", "D2", "G2"], type: "bass" },
+  { id: "standard-ukulele", label: "Standard Ukulele (GCEA)", strings: ["G4", "C4", "E4", "A4"], type: "ukulele" },
+  { id: "ukulele-adfb", label: "Ukulele (aDF#B)", strings: ["A4", "D4", "F4", "B4"], type: "ukulele" },
 ];
 
 const CUSTOM_PRESETS: TuningPreset[] = [
@@ -32,32 +34,27 @@ function getNoteColor(note: string) {
 
 type TuneStatus = "sharp" | "flat" | "in-tune" | "idle";
 
-function TunerNeedle({ status, cents }: { status: TuneStatus; cents: number }) {
-  const clampedCents = Math.max(-50, Math.min(50, cents));
-  const rotation = (clampedCents / 50) * 45;
+function TunerNeedle({ status, cent }: { status: TuneStatus; cent: number }) {
+  const clampedcent = Math.max(-50, Math.min(50, cent));
+  const rotation = (clampedcent / 50) * 45;
 
   const statusColor =
     status === "in-tune" ? "#48dd48" :
-    status === "sharp" ? "#f472b6" :
-    status === "flat" ? "#60a5fa" : "#7a7a8c";
+      status === "sharp" ? "#f472b6" :
+        status === "flat" ? "#60a5fa" : "#7a7a8c";
 
   return (
     <div className="flex flex-col items-center gap-4 my-4">
       {/* Meter arc */}
       <div className="relative w-56 h-28 overflow-hidden">
         <svg viewBox="0 0 224 112" className="w-full h-full">
-          {/* Background arc */}
           <path d="M 16 112 A 96 96 0 0 1 208 112" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" strokeLinecap="round" />
-          {/* Colored arc segments */}
           <path d="M 16 112 A 96 96 0 0 1 112 16" fill="none" stroke="#60a5fa44" strokeWidth="4" strokeLinecap="round" />
           <path d="M 112 16 A 96 96 0 0 1 208 112" fill="none" stroke="#f472b644" strokeWidth="4" strokeLinecap="round" />
-          {/* Center tick */}
           <line x1="112" y1="20" x2="112" y2="36" stroke="#4ade8066" strokeWidth="2" />
-          {/* Labels */}
-          <text x="20" y="105" fill="#60a5fa88" fontSize="10" fontFamily="monospace">-50¢</text>
+          <text x="20" y="105" fill="#60a5fa88" fontSize="10" fontFamily="monospace">-50</text>
           <text x="98" y="14" fill="#4ade8088" fontSize="10" fontFamily="monospace">0</text>
-          <text x="194" y="105" fill="#f472b688" fontSize="10" fontFamily="monospace">+50¢</text>
-          {/* Needle */}
+          <text x="194" y="105" fill="#f472b688" fontSize="10" fontFamily="monospace">+50</text>
           <g transform={`rotate(${rotation}, 112, 112)`}>
             <line x1="112" y1="112" x2="112" y2="22" stroke={statusColor} strokeWidth="2" strokeLinecap="round" />
             <circle cx="112" cy="112" r="5" fill={statusColor} />
@@ -68,12 +65,12 @@ function TunerNeedle({ status, cents }: { status: TuneStatus; cents: number }) {
       {/* Status readout */}
       <div className="text-center">
         <div
-          className="inline-block px-4 py-1.5 rounded-full text-sm font-mono"
+          className="inline-block px-4 py-1.5 rounded-full text-sm font-sans"
           style={{ background: statusColor + "22", color: statusColor, border: `1px solid ${statusColor}44` }}
         >
           {status === "in-tune" ? "✓ In Tune" :
-           status === "sharp" ? `▲ ${Math.abs(cents)}¢ Sharp` :
-           status === "flat" ? `▼ ${Math.abs(cents)}¢ Flat` : "Pluck a string..."}
+            status === "sharp" ? `+ ${Math.abs(cent)} Sharp` :
+              status === "flat" ? `- ${Math.abs(cent)} Flat` : "Pluck a string..."}
         </div>
       </div>
     </div>
@@ -81,14 +78,14 @@ function TunerNeedle({ status, cents }: { status: TuneStatus; cents: number }) {
 }
 
 interface TunerProps {
-  selectedPreset?: { id: string; label: string; strings: number; tuning: string[]; type: "guitar" | "bass" };
+  selectedPreset?: { id: string; label: string; strings: number; tuning: string[]; family?: "guitar" | "bass" | "ukulele" };
 }
 
 export function Tuner({ selectedPreset }: TunerProps) {
   const [listening, setListening] = useState(false);
   const [activeString, setActiveString] = useState(0);
   const [tuneStatus, setTuneStatus] = useState<TuneStatus>("idle");
-  const [cents, setCents] = useState(0);
+  const [cent, setcent] = useState(0);
   const [detectedNote, setDetectedNote] = useState<string | null>(null);
   const [activePresetId, setActivePresetId] = useState("standard-guitar");
   const [showPresets, setShowPresets] = useState(false);
@@ -97,8 +94,25 @@ export function Tuner({ selectedPreset }: TunerProps) {
   const [customFreqs, setCustomFreqs] = useState<string[]>(["E2", "A2", "D3", "G3", "B3", "E4"]);
   const [tab, setTab] = useState<"presets" | "custom">("presets");
 
+  // Sync state if selectedPreset prop is passed down from main screen navigation
+  useEffect(() => {
+    if (selectedPreset) {
+      const match = TUNING_PRESETS.find(p => p.type === selectedPreset.family);
+      if (match) {
+        setActivePresetId(match.id);
+      }
+    }
+  }, [selectedPreset]);
+
+  const familyFilter = selectedPreset?.family;
   const allPresets = [...TUNING_PRESETS, ...CUSTOM_PRESETS];
-  const currentPreset = allPresets.find(p => p.id === activePresetId) || TUNING_PRESETS[0];
+
+  // Filter preset dropdown list by family if selected
+  const filteredPresets = familyFilter
+    ? allPresets.filter(p => p.type === familyFilter)
+    : allPresets;
+
+  const currentPreset = allPresets.find(p => p.id === activePresetId) || filteredPresets[0] || TUNING_PRESETS[0];
   const strings = currentPreset.strings;
 
   function simulatePluck(stringIdx: number) {
@@ -106,11 +120,11 @@ export function Tuner({ selectedPreset }: TunerProps) {
     setActiveString(stringIdx);
     const note = strings[stringIdx];
     setDetectedNote(note.replace(/[0-9]/g, ""));
-    const randCents = Math.round((Math.random() - 0.5) * 40);
-    setCents(randCents);
+    const randcent = Math.round((Math.random() - 0.5) * 40);
+    setcent(randcent);
     setTuneStatus(
-      Math.abs(randCents) < 5 ? "in-tune" :
-      randCents > 0 ? "sharp" : "flat"
+      Math.abs(randcent) < 5 ? "in-tune" :
+        randcent > 0 ? "sharp" : "flat"
     );
   }
 
@@ -123,11 +137,10 @@ export function Tuner({ selectedPreset }: TunerProps) {
         </div>
         <button
           onClick={() => setListening(l => !l)}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${
-            listening
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-foreground border border-border"
-          }`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${listening
+            ? "bg-primary text-primary-foreground"
+            : "bg-secondary text-foreground border border-border"
+            }`}
         >
           {listening ? <Mic size={16} /> : <MicOff size={16} />}
           {listening ? "Listening…" : "Start Mic"}
@@ -140,9 +153,8 @@ export function Tuner({ selectedPreset }: TunerProps) {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-5 py-1.5 rounded-md transition-all capitalize ${
-              tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`px-5 py-1.5 rounded-md transition-all capitalize ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
           >
             {t}
           </button>
@@ -157,24 +169,23 @@ export function Tuner({ selectedPreset }: TunerProps) {
               onClick={() => setShowPresets(!showPresets)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary text-foreground hover:border-primary/50 border border-border transition-all"
             >
-              <span className="font-mono text-sm">{currentPreset.label}</span>
+              <span className="font-sans text-sm">{currentPreset.label}</span>
               <ChevronDown size={14} className={`transition-transform ${showPresets ? "rotate-180" : ""}`} />
             </button>
           </div>
           {showPresets && (
             <div className="rounded-lg border border-border bg-secondary overflow-hidden mt-2">
-              {allPresets.map(preset => (
+              {filteredPresets.map(preset => (
                 <button
                   key={preset.id}
                   onClick={() => { setActivePresetId(preset.id); setShowPresets(false); }}
-                  className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-muted/50 transition-colors border-b border-border last:border-0 ${
-                    preset.id === activePresetId ? "text-primary" : "text-foreground"
-                  }`}
+                  className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-muted/50 transition-colors border-b border-border last:border-0 ${preset.id === activePresetId ? "text-primary" : "text-foreground"
+                    }`}
                 >
-                  <span className="font-mono text-sm">{preset.label}</span>
+                  <span className="font-sans text-sm">{preset.label}</span>
                   <div className="flex gap-1">
                     {preset.strings.map((n, i) => (
-                      <span key={i} className="text-xs font-mono" style={{ color: getNoteColor(n) }}>
+                      <span key={i} className="text-sm font-sans" style={{ color: getNoteColor(n) }}>
                         {n.replace(/[0-9]/g, "")}
                       </span>
                     ))}
@@ -198,7 +209,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
             {customFreqs.map((freq, i) => (
               <div key={i} className="flex flex-col gap-1">
-                <label className="text-xs text-muted-foreground font-mono">String {i + 1}</label>
+                <label className="text-sm text-primary font-sans">String {i + 1}</label>
                 <input
                   value={freq}
                   onChange={e => {
@@ -206,7 +217,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
                     next[i] = e.target.value;
                     setCustomFreqs(next);
                   }}
-                  className="w-full bg-secondary border border-border rounded px-2 py-1.5 text-sm font-mono text-foreground focus:border-primary focus:outline-none"
+                  className="w-full bg-secondary border border-border rounded px-2 py-1.5 text-sm font-sans text-foreground focus:border-primary focus:outline-none"
                   placeholder="E2"
                 />
               </div>
@@ -232,21 +243,21 @@ export function Tuner({ selectedPreset }: TunerProps) {
       <div className="rounded-xl border border-border bg-card p-6 flex flex-col items-center">
         {/* Detected note */}
         <div className="text-center mb-2">
-          <div className="font-mono" style={{ fontSize: "4rem", lineHeight: 1, color: detectedNote ? getNoteColor(detectedNote) : "#7a7a8c" }}>
+          <div className="font-sans" style={{ fontSize: "4rem", lineHeight: 1, color: detectedNote ? getNoteColor(detectedNote) : "#7a7a8c" }}>
             {detectedNote || "—"}
           </div>
           {detectedNote && (
-            <div className="text-muted-foreground text-sm font-mono mt-1">
-              {cents > 0 ? `+${cents}¢` : `${cents}¢`}
+            <div className="text-muted-foreground text-sm font-sans mt-1">
+              {cent > 0 ? `+${cent}` : `${cent}`}
             </div>
           )}
         </div>
 
-        <TunerNeedle status={tuneStatus} cents={cents} />
+        <TunerNeedle status={tuneStatus} cent={cent} />
 
         {/* String buttons */}
         <div className="w-full mt-4">
-          <p className="text-xs text-muted-foreground mb-2 text-center font-mono uppercase tracking-widest">
+          <p className="text-sm text-primary mb-2 text-center font-sans uppercase tracking-widest">
             {listening ? "Tap a string or pluck to auto-detect" : "Enable microphone to begin"}
           </p>
           <div className="flex justify-center gap-2 flex-wrap">
@@ -265,8 +276,8 @@ export function Tuner({ selectedPreset }: TunerProps) {
                     color: isActive ? color : "#7a7a8c",
                   }}
                 >
-                  <span className="font-mono text-xs">{i + 1}</span>
-                  <span className="font-mono font-bold">{note.replace(/[0-9]/g, "")}</span>
+                  <span className="font-sans text-xs">{i + 1}</span>
+                  <span className="font-sans font-bold">{note.replace(/[0-9]/g, "")}</span>
                   {isActive && tuneStatus === "in-tune" && <span className="text-[10px]">✓</span>}
                 </button>
               );
