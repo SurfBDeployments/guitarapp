@@ -29,7 +29,8 @@ function InstrumentCard({ title, image, family, activeFamily, onSelect }: Instru
       sx={{
         width: 100,
         height: 120,
-        border: isActive ? "2px solid #000" : "1px solid #e0e0e0",
+      backgroundColor: "#2c2c2c",
+        border: isActive ? "2px solid #e0e0e0" : "1px solid #000",
         borderRadius: 2,
         transition: "all 0.2s ease",
         boxShadow: isActive ? 2 : 0,
@@ -44,10 +45,10 @@ function InstrumentCard({ title, image, family, activeFamily, onSelect }: Instru
           height="60"
           image={image}
           alt={title}
-          sx={{ objectFit: "contain", p: 1, backgroundColor: "#f9f9f9" }}
+          sx={{ objectFit: "contain", p: 1, backgroundColor: "#2c2c2c" }}
         />
         <CardContent sx={{ p: 0.5, textAlign: "center", "&:last-child": { pb: 1 } }}>
-          <Typography variant="caption" component="div" sx={{ fontWeight: isActive ? "bold" : "normal", fontSize: "0.7rem" }}>
+          <Typography variant="caption" component="div" sx={{ fontWeight: isActive ? "bold" : "normal", fontSize: "0.7rem", color:"#ffffff", backgroundColor: "#2c2c2c" }}>
             {title}
           </Typography>
         </CardContent>

@@ -29,16 +29,16 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
             onClick={() => onSelect(n.id)}
             className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
               active
-                ? "text-amber-600"   // ← color on the button
+                ? "text-orange-700"   // ← color on the button
                 : "text-primary hover:bg-muted/50"    // ← default on the button
             }`}
           >
-            <Icon size={18} />  {/* inherits text-amber-600 or text-primary via currentColor */}
+            <Icon size={18} />  {/* inherits #B85C00 or text-primary via currentColor */}
             <span className={`text-sm font-sans ${active ? "font-semibold" : "font-normal"}`}>
               {n.label}
             </span>
             {active && (
-              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-amber-600" />
+              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-orange-700" />
             )}
           </button>
         );

@@ -257,7 +257,7 @@ export function WireframeTuner() {
         </div>
         <div>
           <p className="text-md font-semibold text-foreground">Auto Mode</p>
-          <p className="text-[14px] text-primary mt-0.5 font-sans leading-relaxed">
+          <p className="text-sm text-primary font-sans leading-relaxed">
       
             The microphone automatically recognize which string the user is plucking and show them visually if it is sharp or flat.
           </p>
