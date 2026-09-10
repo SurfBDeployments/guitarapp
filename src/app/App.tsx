@@ -29,11 +29,11 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
             onClick={() => onSelect(n.id)}
             className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
               active
-                ? "text-orange-700"   // ← color on the button
-                : "text-primary hover:bg-muted/50"    // ← default on the button
+                ? "text-orange-700"
+                : "text-primary hover:bg-muted/50"
             }`}
           >
-            <Icon size={18} />  {/* inherits #B85C00 or text-primary via currentColor */}
+            <Icon size={18} />
             <span className={`text-sm font-sans ${active ? "font-semibold" : "font-normal"}`}>
               {n.label}
             </span>
@@ -47,13 +47,15 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
   );
 }
 
-
 export default function App() {
+  // Use `screen` consistently across the component
   const [screen, setScreen] = useState<Screen>("instrument");
+  const [activePresetId, setActivePresetId] = useState<string>("g6");
 
-  function handleNavigateToTuner() {
-    setScreen("tune");
-  }
+  const handleNavigateToTuner = (preset: { id: string; label: string; tuning: string[]; family: string }) => {
+    setActivePresetId(preset.id); // Captures 'u4', 'b5', 'g12', etc.
+    setScreen("tune");             // Switches screen tab to Tune
+  };
 
   return (
     /* Outer page — neutral desktop mat */
@@ -86,10 +88,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* App header - Fixed hex syntax */}
+          {/* App header */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border">
             <div className="flex items-center gap-2">
-
               <span className="font-sans font-bold text-lg text-foreground tracking-wide">JamMaster Tuning</span>
             </div>
             <button
@@ -108,12 +109,12 @@ export default function App() {
             style={{ height: "calc(844px - 20px - 44px - 52px - 64px)", background: "transparent" }}
           >
             {screen === "instrument" && <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />}
-            {screen === "tune" && <WireframeTuner />}
+            {screen === "tune" && <WireframeTuner selectedPresetId={activePresetId} />}
             {screen === "music" && <WireframeSongs />}
             {screen === "tools" && <WireframeTools />}
           </div>
 
-          {/* Replaced broken duplicate menu with BottomNav component */}
+          {/* BottomNav component */}
           <BottomNav activeScreen={screen} onSelect={setScreen} />
         </div>
 

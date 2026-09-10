@@ -10,6 +10,8 @@ type TuningPreset = {
 
 const TUNING_PRESETS: TuningPreset[] = [
   { id: "standard-guitar", label: "Standard (EADGBe)", strings: ["E2", "A2", "D3", "G3", "B3", "E4"], type: "guitar" },
+     {id: "std-7-guitar", label: "Standard 7‑String Guitar", strings: ["B", "E", "A", "D", "G", "B", "e"], type: "guitar"},
+  { id: "std-12-guitar", label: "Standard 12‑String Guitar", strings: ["E","E","A","A","D","D","G","G","B","B","e","e"], type: "guitar"},
   { id: "drop-d", label: "Drop D", strings: ["D2", "A2", "D3", "G3", "B3", "E4"], type: "guitar" },
   { id: "open-g", label: "Open G", strings: ["D2", "G2", "D3", "G3", "B3", "D4"], type: "guitar" },
   { id: "standard-bass", label: "Standard Bass (EADG)", strings: ["E1", "A1", "D2", "G2"], type: "bass" },

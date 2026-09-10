@@ -1,28 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mic, MicOff, Save, ChevronDown, Plus, X } from "lucide-react";
 
 const PRESETS = [
-  { id: "std-guitar",   label: "Standard Guitar",       strings: ["E","A","D","G","B","e"],  hz: [82,110,147,196,247,330] },
-  { id: "drop-d",       label: "Drop D",                strings: ["D","A","D","G","B","e"],  hz: [73,110,147,196,247,330] },
-  { id: "open-g",       label: "Open G",                strings: ["D","G","D","G","B","d"],  hz: [73,98,147,196,247,294]  },
-  { id: "std-bass",     label: "Standard Bass (EADG)",  strings: ["E","A","D","G"],          hz: [41,55,73,98]            },
-  { id: "drop-d-bass",  label: "Drop D Bass",           strings: ["D","A","D","G"],          hz: [37,55,73,98]            },
-  { id: "standard-ukulele", label: "Standard Ukulele (GCEA)", strings: ["G", "C", "E", "A"], hz: [37,55,73,98] },
-  { id: "ukulele-adfb", label: "Ukulele (ADF#B)", strings: ["A", "D", "F", "#B"], hz: [37,55,73,98]},
+  { id: "std-guitar", label: "Standard 6-String Guitar", strings: ["E", "A", "D", "G", "B", "e"], hz: [82, 110, 147, 196, 247, 330] },
+  { id: "std-7-guitar", label: "Standard 7‑String Guitar", strings: ["B", "E", "A", "D", "G", "B", "e"], hz: [62, 82, 110, 147, 196, 247, 330] },
+  { id: "std-12-guitar", label: "Standard 12‑String Guitar", strings: ["E", "E", "A", "A", "D", "D", "G", "G", "B", "B", "e", "e"], hz: [82, 164, 110, 220, 147, 294, 196, 392, 247, 247, 330, 330] },
+  { id: "drop-d", label: "Drop D", strings: ["D", "A", "D", "G", "B", "e"], hz: [73, 110, 147, 196, 247, 330] },
+  { id: "open-g", label: "Open G", strings: ["D", "G", "D", "G", "B", "d"], hz: [73, 98, 147, 196, 247, 294] },
+  { id: "std-bass", label: "4-String Bass (EADG)", strings: ["E", "A", "D", "G"], hz: [41, 55, 73, 98] },
+  { id: "std-5-bass", label: "5-String Bass (BEADG)", strings: ["B", "E", "A", "D", "G"], hz: [31, 41, 55, 73, 98] },
+  { id: "std-6-bass", label: "6-String Bass (BEADGC)", strings: ["B", "E", "A", "D", "G", "C"], hz: [31, 41, 55, 73, 98, 130] },
+  { id: "drop-d-bass", label: "Drop D Bass", strings: ["D", "A", "D", "G"], hz: [37, 55, 73, 98] },
+  { id: "standard-ukulele", label: "Standard Ukulele (GCEA)", strings: ["G", "C", "E", "A"], hz: [392, 261, 329, 440] },
+  { id: "ukulele-adfb", label: "Ukulele (ADF#B)", strings: ["A", "D", "F#", "B"], hz: [440, 293, 370, 493] },
 ];
+
+// Helper to translate Instrument page IDs to Tuner Preset IDs
+const INSTRUMENT_TO_TUNER_MAP: Record<string, string> = {
+  g6: "std-guitar",
+  g7: "std-7-guitar",
+  g12: "std-12-guitar",
+  b4: "std-bass",
+  b5: "std-5-bass",
+  b6: "std-6-bass",
+  u4: "standard-ukulele",
+};
 
 type TuneStatus = "in-tune" | "sharp" | "flat" | "idle";
 
 function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
 }
+
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-sans font- text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
-} 
+  return <p className="text-sm font-sans font-semibold text-muted-foreground uppercase tracking-widest mb-1">{children}</p>;
+}
 
 function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
   const clamped = Math.max(-50, Math.min(50, cents));
-  const pct     = ((clamped + 50) / 100) * 100;
+  const pct = ((clamped + 50) / 100) * 100;
 
   return (
     <div className="w-full flex flex-col gap-1.5">
@@ -43,36 +59,48 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
         <span className="absolute left-1/2 -translate-x-1/2 text-xs font-sans text-foreground/50">0ct</span>
       </div>
       <div className="text-center h-5">
-        {status === "idle"     && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
-        {status === "in-tune"  && <span className="text-sm font-sans text-foreground font-bold">✓ In Tune</span>}
-        {status === "sharp"    && <span className="text-sm font-sans text-foreground">▲ {Math.abs(cents)} ct Sharp</span>}
-        {status === "flat"     && <span className="text-sm font-sans text-foreground">▼ {Math.abs(cents)} ct Flat</span>}
+        {status === "idle" && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
+        {status === "in-tune" && <span className="text-sm font-sans text-foreground font-bold">✓ In Tune</span>}
+        {status === "sharp" && <span className="text-sm font-sans text-foreground">▲ {Math.abs(cents)} ct Sharp</span>}
+        {status === "flat" && <span className="text-sm font-sans text-foreground">▼ {Math.abs(cents)} ct Flat</span>}
       </div>
     </div>
   );
 }
 
-export function WireframeTuner() {
-  const [mic,          setMic]          = useState(false);
-  const [tab,          setTab]          = useState<"presets"|"custom">("presets");
-  const [presetId,     setPresetId]     = useState("std-guitar");
-  const [showDrop,     setShowDrop]     = useState(false);
-  const [activeStr,    setActiveStr]    = useState<number|null>(null);
-  const [status,       setStatus]       = useState<TuneStatus>("idle");
-  const [cents,        setCents]        = useState(0);
-  const [detected,     setDetected]     = useState<string|null>(null);
-  const [customStrs,   setCustomStrs]   = useState(["E2","A2","D3","G3","B3","E4"]);
-  const [saveName,     setSaveName]     = useState("");
-  const [showSave,     setShowSave]     = useState(false);
-  const [savedPresets, setSavedPresets] = useState<{label:string;strings:string[]}[]>([]);
+interface WireframeTunerProps {
+  selectedPresetId?: string;
+}
+
+export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps) {
+  const [mic, setMic] = useState(false);
+  const [tab, setTab] = useState<"presets" | "custom">("presets");
+  const [presetId, setPresetId] = useState(() => INSTRUMENT_TO_TUNER_MAP[selectedPresetId] || "std-guitar");
+  const [showDrop, setShowDrop] = useState(false);
+  const [activeStr, setActiveStr] = useState<number | null>(null);
+  const [status, setStatus] = useState<TuneStatus>("idle");
+  const [cents, setCents] = useState(0);
+  const [detected, setDetected] = useState<string | null>(null);
+  const [customStrs, setCustomStrs] = useState(["E2", "A2", "D3", "G3", "B3", "E4"]);
+  const [saveName, setSaveName] = useState("");
+  const [showSave, setShowSave] = useState(false);
+  const [savedPresets, setSavedPresets] = useState<{ label: string; strings: string[] }[]>([]);
+
+  // Update tuner preset whenever selectedPresetId changes from Instrument screen
+  useEffect(() => {
+    const mappedId = INSTRUMENT_TO_TUNER_MAP[selectedPresetId] || selectedPresetId;
+    if (PRESETS.some(p => p.id === mappedId)) {
+      setPresetId(mappedId);
+    }
+  }, [selectedPresetId]);
 
   const activePreset = PRESETS.find(p => p.id === presetId) || PRESETS[0];
-  const strings      = tab === "custom" ? customStrs : activePreset.strings;
+  const strings = tab === "custom" ? customStrs : activePreset.strings;
 
   function pluck(i: number) {
     if (!mic) return;
     setActiveStr(i);
-    setDetected(strings[i].replace(/[0-9]/g,"").toUpperCase());
+    setDetected(strings[i].replace(/[0-9]/g, "").toUpperCase());
     const c = Math.round((Math.random() - 0.5) * 60);
     setCents(c);
     setStatus(Math.abs(c) < 5 ? "in-tune" : c > 0 ? "sharp" : "flat");
@@ -91,15 +119,12 @@ export function WireframeTuner() {
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div>
-      
           <h2 className="text-base font-bold text-foreground mt-0.5">Tuner</h2>
           <p className="text-xs text-primary">Auto-detect sharp / flat per string.</p>
         </div>
         <button
           onClick={() => { setMic(m => !m); if (mic) { setStatus("idle"); setDetected(null); setActiveStr(null); } }}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded border text-sm font-sans whitespace-nowrap shrink-0 mt-1 ${
-            mic ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border text-foreground"
-          }`}
+          className={`flex items-center gap-1.5 px-3 py-2 rounded border text-sm font-sans whitespace-nowrap shrink-0 mt-1 ${mic ? "bg-primary text-primary-foreground border-primary" : "bg-card border-border text-foreground"}`}
         >
           {mic ? <Mic size={12} /> : <MicOff size={12} />}
           {mic ? "Mic ON" : "Enable Mic"}
@@ -108,13 +133,11 @@ export function WireframeTuner() {
 
       {/* Tabs */}
       <div className="flex gap-1 p-1 bg-card border border-border rounded">
-        {(["presets","custom"] as const).map(t => (
+        {(["presets", "custom"] as const).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`flex-1 py-1.5 rounded text-sm font-sans capitalize transition-colors ${
-              tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-            }`}
+            className={`flex-1 py-1.5 rounded text-sm font-sans capitalize transition-colors ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
           >
             {t}
           </button>
@@ -138,9 +161,7 @@ export function WireframeTuner() {
                 <button
                   key={p.id}
                   onClick={() => { setPresetId(p.id); setShowDrop(false); }}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 text-left border-b border-border last:border-0 text-sm font-sans ${
-                    p.id === presetId ? "text-foreground" : "text-muted-foreground"
-                  }`}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 text-left border-b border-border last:border-0 text-sm font-sans ${p.id === presetId ? "text-foreground" : "text-muted-foreground"}`}
                 >
                   <span>{p.label}</span>
                   <span className="text-muted-foreground">{p.strings.join(" ")}</span>
@@ -235,14 +256,13 @@ export function WireframeTuner() {
                 key={i}
                 onClick={() => pluck(i)}
                 disabled={!mic}
-                className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-40 ${
-                  activeStr === i && mic
-                    ? "border-foreground bg-foreground/10 text-foreground"
-                    : "border-border bg-muted text-muted-foreground"
+                className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-40 ${activeStr === i && mic
+                  ? "border-foreground bg-foreground/10 text-foreground"
+                  : "border-border bg-muted text-muted-foreground"
                 }`}
               >
                 <span className="text-xs opacity-50">{i + 1}</span>
-                <span className="font-bold">{note.replace(/[0-9]/g,"").toUpperCase()}</span>
+                <span className="font-bold">{note.replace(/[0-9]/g, "").toUpperCase()}</span>
                 {activeStr === i && status === "in-tune" && mic && <span className="text-xs">✓</span>}
               </button>
             ))}
@@ -258,8 +278,7 @@ export function WireframeTuner() {
         <div>
           <p className="text-md font-semibold text-foreground">Auto Mode</p>
           <p className="text-sm text-primary font-sans leading-relaxed">
-      
-            The microphone automatically recognize which string the user is plucking and show them visually if it is sharp or flat.
+            The microphone automatically recognizes which string the user is plucking and shows them visually if it is sharp or flat.
           </p>
         </div>
       </Box>

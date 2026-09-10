@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import Grid from "@mui/material/Grid";
 
-// 1. FIX: Use default imports without curly braces for static image assets
+
 import ukeleleImg from "../../imports/uke_sm.png";
 import ibanezImg from "../../imports/ibanez.png";
 import highendbassImg from "../../imports/highendbass.png";
@@ -263,7 +263,9 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
         <MobileFretboard tuning={active.tuning} family={family} />
       </Box>
 
-      {/* CTA */}
+
+{/* CTA Button */}
+
       <button
         onClick={() => onNavigateToTuner({ id: active.id, label: active.label, tuning: active.tuning, family })}
         className="w-full py-3.5 rounded border border-foreground bg-primary text-primary-foreground font-sans text-sm font-bold"
