@@ -197,7 +197,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
         <p className="text-sm text-primary mt-0.5">Choose type and string configuration to begin.</p>
       </div>
 
-      {/* 3. FIX: Clean inline Grid mapping for the cards */}
+      {/* 3. Clean inline Grid mapping for the cards */}
       <Grid container spacing={1} justifyContent="center">
         {instrumentCards.map((card) => (
           <Grid key={card.family}>

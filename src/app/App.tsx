@@ -18,7 +18,7 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
   return (
     <div
       className="border-t border-border flex items-stretch"
-      style={{ height: 64, background: "#ffffff" }}
+      style={{ height: 75, background: "#ffffff", padding:"10px"}}
     >
       {NAV.map((n) => {
         const Icon = n.icon;
@@ -27,11 +27,10 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
           <button
             key={n.id}
             onClick={() => onSelect(n.id)}
-            className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${
-              active
+            className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${active
                 ? "text-orange-700"
                 : "text-primary hover:bg-muted/50"
-            }`}
+              }`}
           >
             <Icon size={18} />
             <span className={`text-sm font-sans ${active ? "font-semibold" : "font-normal"}`}>
@@ -60,19 +59,15 @@ export default function App() {
   return (
     /* Outer page — neutral desktop mat */
     <div className="min-h-screen bg-[#d0d0d0] flex items-start justify-center py-10 px-4">
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-3 w-full max-w-[1200px]">
 
-        {/* Desktop label */}
-        <div className="text-sm font-sans text-[#666] uppercase tracking-widest">
-          JamMaster Tuning · Mobile Wireframe · 390 × 844
-        </div>
 
         {/* Phone shell */}
         <div
           className="relative bg-background rounded-[44px] overflow-hidden shadow-2xl"
           style={{
-            width: 390,
-            height: 844,
+            width: '100%',
+            maxWidth: 1200,
             border: "10px solid #222",
             boxShadow: "0 0 0 2px #444, 0 32px 64px rgba(0,0,0,0.45)",
             background: "linear-gradient(to bottom, #FFE8A3 5%, #ffffff 95%)",
@@ -106,7 +101,7 @@ export default function App() {
           {/* Scrollable screen content */}
           <div
             className="overflow-y-auto"
-            style={{ height: "calc(844px - 20px - 44px - 52px - 64px)", background: "transparent" }}
+            style={{ height: "calc(844px - 20px - 44px - 52px - 75px)", background: "transparent" }}
           >
             {screen === "instrument" && <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />}
             {screen === "tune" && <WireframeTuner selectedPresetId={activePresetId} />}
