@@ -29,13 +29,13 @@ function InstrumentCard({ title, image, family, activeFamily, onSelect }: Instru
       sx={{
         width: 100,
         height: 120,
-      backgroundColor: "#2c2c2c",
+        backgroundColor: "#2c2c2c",
         border: isActive ? "2px solid #e0e0e0" : "1px solid #000",
         borderRadius: 2,
         transition: "all 0.2s ease",
         boxShadow: isActive ? 2 : 0,
         objectFit: "contain", // Scales images proportionally without stretching
-    p: 1,
+        p: 1,
       }}
     >
       <CardActionArea onClick={() => onSelect(family)}>
@@ -48,7 +48,7 @@ function InstrumentCard({ title, image, family, activeFamily, onSelect }: Instru
           sx={{ objectFit: "contain", p: 1, backgroundColor: "#2c2c2c" }}
         />
         <CardContent sx={{ p: 0.5, textAlign: "center", "&:last-child": { pb: 1 } }}>
-          <Typography variant="caption" component="div" sx={{ fontWeight: isActive ? "bold" : "normal", fontSize: "0.7rem", color:"#ffffff", backgroundColor: "#2c2c2c" }}>
+          <Typography variant="caption" component="div" sx={{ fontWeight: isActive ? "bold" : "normal", fontSize: "0.7rem", color: "#ffffff", backgroundColor: "#2c2c2c" }}>
             {title}
           </Typography>
         </CardContent>
@@ -220,11 +220,10 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
             <button
               key={p.id}
               onClick={() => setSelectedId(p.id)}
-              className={`w-full flex items-center gap-3 px-3 py-3 rounded border text-left transition-colors ${
-                selectedId === p.id
+              className={`w-full flex items-center gap-3 px-3 py-3 rounded border text-left transition-colors ${selectedId === p.id
                   ? "border-foreground"
                   : "border-border bg-card"
-              }`}
+                }`}
             >
               <span className="font-sans text-2xl text-muted-foreground w-7 text-center shrink-0">
                 {p.strings}
@@ -264,7 +263,7 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
       </Box>
 
 
-{/* CTA Button */}
+      {/* CTA Button */}
 
       <button
         onClick={() => onNavigateToTuner({ id: active.id, label: active.label, tuning: active.tuning, family })}
