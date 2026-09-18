@@ -3,7 +3,7 @@ import { WireframeInstrument } from "./components/WireframeInstrument";
 import { WireframeTuner } from "./components/WireframeTuner";
 import { WireframeSongs } from "./components/WireframeSongs";
 import { WireframeTools } from "./components/WireframeTools";
-import { Guitar, Menu, Music4, SlidersHorizontal, LucideIcon, Share2, HelpCircle, Lock, X, Radio, ClefTreble, ListMusic } from 'lucide-react';
+import { Guitar, Menu, Music4, SlidersHorizontal, LucideIcon, Share2, HelpCircle, Lock, X, Radio, ClefTreble, ListMusic, ChevronRight } from 'lucide-react';
 
 
 
@@ -60,7 +60,7 @@ function ProfileOverlay({ onClose }: { onClose: () => void }) {
         < div className="px-5 py-5 border-b border-border">
           <p className="text-sm font-bold text-foreground mb-3">My Profile</p>
           <p className="text-sm font-medium text-foreground">Brian M</p>
-          <p className="text-sm text-foreground mt-0.5">jamMaster@gmail.com</p>
+          <p className="text-sm text-foreground mt-0.5 " style={{ textDecoration: "underline", cursor: "pointer" }}>jamMaster@gmail.com</p>
           <button className="mt-3 text-sm font-medium" style={{ color: "#c0392b" }}>
             Sign Out
           </button>
@@ -71,13 +71,15 @@ function ProfileOverlay({ onClose }: { onClose: () => void }) {
           <p className="text-sm font-bold text-foreground mb-4">Tool Settings</p>
           <div className="flex flex-col gap-3.5">
             {[
-              { label: "Tuner", Icon: Radio },
-              { label: "Scales", Icon: ClefTreble },
-              { label: "Chords", Icon: ListMusic },
+              { label: "Tuner", Icon: Radio, alt: "Tuner" },
+              { label: "Scales", Icon: ClefTreble, alt: "Scales" },
+              { label: "Chords", Icon: ListMusic, alt: "Chords" },
             ].map(({ label, Icon }) => (
-              <div key={label} className="flex items-center justify-start gap-8">
-                <span className="text-sm text-foreground">{label}</span>
+              <div key={label} className="flex items-center justify-start gap-4">
                 <Icon size={18} className="text-muted-foreground" />
+                <span className="text-sm text-foreground">{label}</span>
+                <ChevronRight size={15} className="text-muted-foreground ml-auto" />
+
               </div>
             ))}
           </div>
@@ -88,13 +90,14 @@ function ProfileOverlay({ onClose }: { onClose: () => void }) {
           <p className="text-sm font-bold text-foreground mb-4 ">Tuner Support</p>
           <div className="flex flex-col gap-3.5">
             {[
-              { label: "App Share", Icon: Share2 },
-              { label: "Help?", Icon: HelpCircle },
-              { label: "Privacy", Icon: Lock },
-            ].map(({ label, Icon }) => (
-              <div key={label} className="flex items-center justify-start gap-8">
-                <span className="text-sm text-foreground">{label}</span>
+              { label: "App Share", Icon: Share2, alt: "App Share" },
+              { label: "Help?", Icon: HelpCircle, alt: "Help" },
+              { label: "Privacy", Icon: Lock, alt: "Lock" },
+            ].map(({ Icon, label }) => (
+              <div key={label} className="flex items-center justify-start gap-4">
                 <Icon size={18} className="text-muted-foreground" />
+                <span className="text-sm text-foreground">{label}</span>
+
               </div>
             ))}
           </div>
@@ -102,7 +105,7 @@ function ProfileOverlay({ onClose }: { onClose: () => void }) {
 
         {/* Footer */}
         <div className="mt-auto px-5 py-4 border-t border-border">
-          <p className="text-xs text-muted-foreground text-center font-mono">JamMaster Tuning</p>
+          <p className="text-sm text-muted-foreground text-center font-mono">JamMaster Tuning</p>
         </div>
       </div>
 
@@ -196,7 +199,7 @@ export default function App() {
 
           {/* App header */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <span className="font-sans font-bold text-lg text-foreground tracking-wide">JamMaster Tuning</span>
             </div>
             <button
