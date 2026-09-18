@@ -138,9 +138,9 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
           <button
             key={n.id}
             onClick={() => onSelect(n.id)}
-            className={`relative flex-1 flex flex-col items-center justify-center gap-1 transition-colors ${active
-              ? "text-orange-700"
-              : "text-primary hover:bg-muted/50"
+            className={`relative flex-1 flex flex-col items-center justify-center gap-1 ${active
+              ? "text-muted-foreground"
+              : "muted-foreground hover:bg-muted/50"
               }`}
           >
             <Icon size={18} />
@@ -148,7 +148,7 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
               {n.label}
             </span>
             {active && (
-              <div className="absolute bottom-1 w-4 h-0.5 rounded-full bg-orange-700" />
+              <div className="absolute bottom-1 w-4 h-0.5 rounded-full muted-foreground" />
             )}
           </button>
         );
@@ -207,7 +207,7 @@ export default function App() {
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
               title="Open menu"
-              className="w-7 h-7 rounded border border-border bg-muted flex items-center justify-center"
+              className="w-7 h-7 rounded border border-border flex items-center justify-center"
             >
               <Menu size={14} className="text-foreground" />
             </button>

@@ -45,22 +45,22 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
       <div className="relative h-7 bg-muted border border-border rounded flex items-center overflow-hidden">
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-foreground/40 z-10" />
         {status === "flat" && (
-          <div className="absolute top-1 bottom-1 bg-foreground/15 border-r border-foreground/30 rounded-l"
+          <div className="absolute top-1 bottom-1  border-r bg-foreground/100 border-foreground/30 rounded-l"
             style={{ left: `${pct}%`, right: "50%" }} />
         )}
         {status === "sharp" && (
-          <div className="absolute top-1 bottom-1 bg-foreground/15 border-l border-foreground/30 rounded-r"
+          <div className="absolute top-1 bottom-1 bg-foreground/100 border-l border-foreground/30 rounded-r"
             style={{ left: "50%", right: `${100 - pct}%` }} />
         )}
-        <div className="absolute top-0 bottom-0 w-0.5 bg-foreground z-20 transition-all duration-300"
+        <div className="absolute top-0 bottom-0 bg-foreground z-20 transition-all duration-300"
           style={{ left: `${pct}%` }} />
-        <span className="absolute left-2 text-xs font-sans text-muted-foreground">Flat</span>
-        <span className="absolute right-2 text-xs font-sans text-muted-foreground">Sharp</span>
+        <span className="absolute left-2 text-sm font-medium text-foreground">Flat</span>
+        <span className="absolute right-2  text-sm font-medium text-foreground">Sharp</span>
         <span className="absolute left-1/2 -translate-x-1/2 text-xs font-sans text-foreground/50">0ct</span>
       </div>
       <div className="text-center h-5">
         {status === "idle" && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
-        {status === "in-tune" && <span className="text-sm font-sans text-foreground font-bold">✓ In Tune</span>}
+        {status === "in-tune" && <span className="text-sm font-sans font-bold intunetext">✓ In Tune</span>}
         {status === "sharp" && <span className="text-sm font-sans text-foreground">▲ {Math.abs(cents)} ct Sharp</span>}
         {status === "flat" && <span className="text-sm font-sans text-foreground">▼ {Math.abs(cents)} ct Flat</span>}
       </div>
@@ -237,8 +237,15 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
       {/* Tuner display */}
       <Box className="p-4 flex flex-col items-center gap-3">
         {/* Big detected note */}
-        <div className="w-16 h-16 rounded border-2 border-border bg-muted flex items-center justify-center">
-          <span className="font-sans text-3xl font-bold text-foreground">{detected ?? "—"}</span>
+        <div
+          className={`w-16 h-16 rounded border-2 flex items-center justify-center transition-colors ${status === "in-tune"
+            ? "intune border-emerald-600 text-white"
+            : "bg-muted border-border text-foreground"
+            }`}
+        >
+          <span className="font-sans text-3xl font-bold">
+            {detected ?? "—"}
+          </span>
         </div>
 
         <div className="w-full">
@@ -251,21 +258,28 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
             {mic ? "[ Tap string or pluck to auto-detect ]" : "[ Enable mic to tune ]"}
           </p>
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(strings.length, 6)}, 1fr)` }}>
-            {strings.map((note, i) => (
-              <button
-                key={i}
-                onClick={() => pluck(i)}
-                disabled={!mic}
-                className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-40 ${activeStr === i && mic
-                  ? "border-foreground bg-foreground/10 text-foreground"
-                  : "border-border bg-muted text-muted-foreground"
-                }`}
-              >
-                <span className="text-xs opacity-50">{i + 1}</span>
-                <span className="font-bold">{note.replace(/[0-9]/g, "").toUpperCase()}</span>
-                {activeStr === i && status === "in-tune" && mic && <span className="text-xs">✓</span>}
-              </button>
-            ))}
+            {strings.map((note, i) => {
+              const isActive = activeStr === i && mic;
+              const isInTune = isActive && status === "in-tune";
+
+              return (
+                <button
+                  key={i}
+                  onClick={() => pluck(i)}
+                  disabled={!mic}
+                  className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-50 ${isInTune
+                    ? "border-emerald-600 intune text-white"
+                    : isActive
+                      ? "border-foreground bg-primary text-primary-foreground"
+                      : "border-border bg-muted text-muted-foreground"
+                    }`}
+                >
+                  <span className="text-xs opacity-50">{i + 1}</span>
+                  <span className="font-bold">{note.replace(/[0-9]/g, "").toUpperCase()}</span>
+                  {isInTune && <span className="text-xs">✓</span>}
+                </button>
+              );
+            })}
           </div>
         </div>
       </Box>
