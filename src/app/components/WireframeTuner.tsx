@@ -45,11 +45,11 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
       <div className="relative h-7 bg-muted border border-border rounded flex items-center overflow-hidden">
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-foreground/40 z-10" />
         {status === "flat" && (
-          <div className="absolute top-1 bottom-1  border-r bg-foreground/100 border-foreground/30 rounded-l"
+          <div className="absolute top-1 bottom-1  border-r bg-accent/100 border-foreground/30 rounded-l"
             style={{ left: `${pct}%`, right: "50%" }} />
         )}
         {status === "sharp" && (
-          <div className="absolute top-1 bottom-1 bg-foreground/100 border-l border-foreground/30 rounded-r"
+          <div className="absolute top-1 bottom-1 bg-accent/100 border-l border-foreground/30 rounded-r"
             style={{ left: "50%", right: `${100 - pct}%` }} />
         )}
         <div className="absolute top-0 bottom-0 bg-foreground z-20 transition-all duration-300"
@@ -224,7 +224,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
           {savedPresets.length > 0 && (
             <div className="mt-2 border-t border-border pt-2 flex flex-col gap-1">
               {savedPresets.map((cp, i) => (
-                <div key={i} className="flex items-center justify-between text-sm font-sans bg-muted border border-border rounded px-2 py-1.5">
+                <div key={i} className="flex items-center justify-between text-sm font-sans bg-accent border border-border rounded px-2 py-1.5">
                   <span className="text-foreground">{cp.label}</span>
                   <span className="text-muted-foreground">{cp.strings.join(" ")}</span>
                 </div>
@@ -240,7 +240,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
         <div
           className={`w-16 h-16 rounded border-2 flex items-center justify-center transition-colors ${status === "in-tune"
             ? "intune border-emerald-600 text-white"
-            : "bg-muted border-border text-foreground"
+            : "bg-accent border-border text-white"
             }`}
         >
           <span className="font-sans text-3xl font-bold">
@@ -260,7 +260,8 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(strings.length, 6)}, 1fr)` }}>
             {strings.map((note, i) => {
               const isActive = activeStr === i && mic;
-              const isInTune = isActive && status === "in-tune";
+
+              const isInTune = isActive && status === "flat" || status === "sharp" ? false : isActive && status === "in-tune";
 
               return (
                 <button
@@ -270,7 +271,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
                   className={`flex flex-col items-center py-2 rounded border text-sm font-sans transition-colors disabled:opacity-50 ${isInTune
                     ? "border-emerald-600 intune text-white"
                     : isActive
-                      ? "border-foreground bg-primary text-primary-foreground"
+                      ? "border-foreground bg-accent text-primary-foreground"
                       : "border-border bg-muted text-muted-foreground"
                     }`}
                 >

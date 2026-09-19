@@ -139,8 +139,8 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
             key={n.id}
             onClick={() => onSelect(n.id)}
             className={`relative flex-1 flex flex-col items-center justify-center gap-1 ${active
-              ? "text-muted-foreground"
-              : "muted-foreground hover:bg-muted/50"
+              ? "text-accent-foreground"
+              : "accent-foreground hover:bg-muted/50"
               }`}
           >
             <Icon size={18} />
@@ -148,7 +148,7 @@ export function BottomNav({ activeScreen, onSelect }: { activeScreen: Screen; on
               {n.label}
             </span>
             {active && (
-              <div className="absolute bottom-1 w-4 h-0.5 rounded-full muted-foreground" />
+              <div className="absolute bottom-1 w-4 h-0.5 rounded-full accent-foreground" />
             )}
           </button>
         );

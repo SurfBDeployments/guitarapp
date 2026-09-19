@@ -4,7 +4,7 @@
   --font-size: 15px;
   --background: linear-gradient(#FFE8A3 10%, #ffffff 90%);
   --foreground: #2c2c2c;
-  --card: rgba(255, 255, 255, 0.72);
+  --card: #fffdf6;
   --card-foreground: #2c2c2c;
   --popover: #ffffff;
   --popover-foreground: #2c2c2c;
@@ -13,10 +13,10 @@
   --secondary: rgba(255, 255, 255, 0.5);
   --secondary-foreground: #2c2c2c;
   --muted: #F2F2F2;
-  --muted-foreground: #BF2604;
-  --accent: #f5d980;
-  --accent-foreground: #2c2c2c;
-  --destructive: #BF2604;
+  --muted-foreground: #262626;
+  --accent: #BF2604;
+  --accent-foreground: #BF2604;
+  --destructive: #262626;
   --destructive-foreground: #ffffff;
   --border: rgba(0, 0, 0, 0.12);
   --input: transparent;

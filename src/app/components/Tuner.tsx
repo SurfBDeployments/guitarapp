@@ -83,9 +83,11 @@ export function Tuner({ selectedPreset }: TunerProps) {
 
   // Define statusColor based on current tuning status
   const statusColor =
-    tuneStatus === "in-tune" ? "#009e52" :
-      tuneStatus === "sharp" || tuneStatus === "flat" ? "#cd3500" :
-        "#a1a1aa"; // default muted gray for idle status
+    tuneStatus === "in-tune"
+      ? "#009e52"
+      : tuneStatus === "sharp" || tuneStatus === "flat"
+        ? "#BF2604"
+        : "#f2f2f2"; // default muted gray for idle status
 
   useEffect(() => {
     if (selectedPreset) {
@@ -131,6 +133,8 @@ export function Tuner({ selectedPreset }: TunerProps) {
             setListening(l => !l);
             if (listening) {
               setTuneStatus("idle");
+              setTuneStatus("flat");
+              setTuneStatus("sharp");
               setDetectedNote(null);
               setActiveString(null);
             }
@@ -243,16 +247,24 @@ export function Tuner({ selectedPreset }: TunerProps) {
         <div className="text-center mb-2">
           <div
             className="font-sans font-bold transition-colors"
-            style={{ fontSize: "4rem", lineHeight: 1, color: detectedNote ? statusColor : "#a1a1aa" }}
+            style={{
+              fontSize: "4rem",
+              lineHeight: 1,
+              color: detectedNote ? statusColor : "var(--foreground, #f2f2f2)",
+            }}
           >
             {detectedNote || "—"}
           </div>
           {detectedNote && (
-            <div className="text-muted-foreground text-sm font-sans mt-1">
+            <div
+              className="text-sm font-sans mt-1 transition-colors"
+              style={{ color: statusColor }}
+            >
               {cent > 0 ? `+${cent} ct` : `${cent} ct`}
             </div>
           )}
         </div>
+
 
         <TunerNeedle status={tuneStatus} cent={cent} statusColor={statusColor} />
 
@@ -273,7 +285,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
                   style={{
                     borderColor: isActive ? statusColor : "rgba(255,255,255,0.1)",
                     background: isActive ? statusColor + "22" : "transparent",
-                    color: isActive ? statusColor : "#a1a1aa",
+                    color: isActive ? statusColor : "#f2f2f2",
                   }}
                 >
                   <span className="font-sans text-xs opacity-60">{i + 1}</span>

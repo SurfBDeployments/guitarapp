@@ -221,8 +221,8 @@ export function WireframeInstrument({ onNavigateToTuner }: Props) {
               key={p.id}
               onClick={() => setSelectedId(p.id)}
               className={`w-full flex items-center gap-3 px-3 py-3 rounded border text-left transition-colors ${selectedId === p.id
-                  ? "border-foreground"
-                  : "border-border bg-card"
+                ? "border-foreground bg-card/50"
+                : "border-border bg-card"
                 }`}
             >
               <span className="font-sans text-2xl text-muted-foreground w-7 text-center shrink-0">
