@@ -240,7 +240,10 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
         <div
           className={`w-16 h-16 rounded border-2 flex items-center justify-center transition-colors ${status === "in-tune"
             ? "intune border-emerald-600 text-white"
-            : "bg-accent border-border text-white"
+            : detected && (status === "sharp" || status === "flat")
+              ? "bg-accent border-accent text-white"
+              : "bg-muted border-border text-foreground"
+
             }`}
         >
           <span className="font-sans text-3xl font-bold">
