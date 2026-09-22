@@ -23,10 +23,10 @@ export default function App() {
 
   return (
 
-    <div className="flex flex-col items-center gap-3 w-full max-w-[1024px] min-h-[640px]">
+    <div className="flex flex-col items-center gap-3 w-full min-h-[640px]">
       {/* Phone Frame */}
       <div
-        className="relative bg-background  overflow-scroll shadow-2xl flex flex-col"
+        className="relative bg-background  overflow-hidden shadow-2xl flex flex-col"
         style={{
           width: "100%",
           maxWidth: 800,
