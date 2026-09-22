@@ -9,16 +9,16 @@ const SONGS = [
       {
         name: "Verse",
         lines: [
-          { chords: ["Em7","G","Dsus4","A7sus4"], lyric: "Today is gonna be the day they're gonna throw it back to you" },
-          { chords: ["Em7","G","Dsus4","A7sus4"], lyric: "By now you should've somehow realized what you gotta do" },
+          { chords: ["Em7", "G", "Dsus4", "A7sus4"], lyric: "Today is gonna be the day they're gonna throw it back to you" },
+          { chords: ["Em7", "G", "Dsus4", "A7sus4"], lyric: "By now you should've somehow realized what you gotta do" },
         ],
       },
       {
         name: "Chorus",
         lines: [
-          { chords: ["C","D","Em",""], lyric: "And all the roads we have to walk are winding" },
-          { chords: ["C","D","Em",""], lyric: "And all the lights that lead us there are blinding" },
-          { chords: ["C","Em7","G","C"], lyric: "Because maybe, you're gonna be the one that saves me" },
+          { chords: ["C", "D", "Em", ""], lyric: "And all the roads we have to walk are winding" },
+          { chords: ["C", "D", "Em", ""], lyric: "And all the lights that lead us there are blinding" },
+          { chords: ["C", "Em7", "G", "C"], lyric: "Because maybe, you're gonna be the one that saves me" },
         ],
       },
     ],
@@ -30,9 +30,9 @@ const SONGS = [
       {
         name: "Verse",
         lines: [
-          { chords: ["G","Am7","G/B","G"], lyric: "Blackbird singing in the dead of night" },
-          { chords: ["C","C#","D","Em"], lyric: "Take these broken wings and learn to fly" },
-          { chords: ["Am","C/G","F#m","F"], lyric: "All your life" },
+          { chords: ["G", "Am7", "G/B", "G"], lyric: "Blackbird singing in the dead of night" },
+          { chords: ["C", "C#", "D", "Em"], lyric: "Take these broken wings and learn to fly" },
+          { chords: ["Am", "C/G", "F#m", "F"], lyric: "All your life" },
         ],
       },
     ],
@@ -44,9 +44,9 @@ const SONGS = [
       {
         name: "Verse",
         lines: [
-          { chords: ["Em","","Em",""], lyric: "So close, no matter how far" },
-          { chords: ["Em","","Em",""], lyric: "Couldn't be much more from the heart" },
-          { chords: ["D","C","Am","Em"], lyric: "Forever trusting who we are — nothing else matters" },
+          { chords: ["Em", "", "Em", ""], lyric: "So close, no matter how far" },
+          { chords: ["Em", "", "Em", ""], lyric: "Couldn't be much more from the heart" },
+          { chords: ["D", "C", "Am", "Em"], lyric: "Forever trusting who we are — nothing else matters" },
         ],
       },
     ],
@@ -58,8 +58,8 @@ const SONGS = [
       {
         name: "Verse",
         lines: [
-          { chords: ["E7","","E7",""], lyric: "Oh baby don't you want to go" },
-          { chords: ["A7","","E7","B7"], lyric: "Back to the land of California, to my sweet home Chicago" },
+          { chords: ["E7", "", "E7", ""], lyric: "Oh baby don't you want to go" },
+          { chords: ["A7", "", "E7", "B7"], lyric: "Back to the land of California, to my sweet home Chicago" },
         ],
       },
     ],
@@ -71,15 +71,351 @@ const SONGS = [
       {
         name: "Riff",
         lines: [
-          { chords: ["Gm","Bb","C#",""], lyric: "We all came out to Montreux" },
-          { chords: ["Gm","Bb","Eb C#",""], lyric: "On the Lake Geneva shoreline" },
+          { chords: ["Gm", "Bb", "C#", ""], lyric: "We all came out to Montreux" },
+          { chords: ["Gm", "Bb", "Eb C#", ""], lyric: "On the Lake Geneva shoreline" },
         ],
       },
     ],
   },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Dark Necessities",
+    "artist": "Red Hot Chili Peppers",
+    "key": "Cm",
+    "tempo": "91 BPM",
+    "difficulty": "Intermediate",
+    "tuning": "Standard",
+    "sections": [
+
+      {
+        "name": "Chorus",
+        "lines": [
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Yeah, you don't know my mind, you don't know my kind"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          },
+          {
+            "chords": ["Ab", "Fm"],
+            "lyric": "Tell the world that I'm falling from the sky"
+          },
+          {
+            "chords": ["Cm", "Bb"],
+            "lyric": "Dark necessities are part of my design"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Eruption",
+    "artist": "Van Halen",
+    "key": "Ab",
+    "tempo": "96 BPM",
+    "difficulty": "Advanced",
+    "tuning": "Half-Step Down",
+    "sections": [
+      {
+        "name": "Intro & Main Solo",
+        "lines": [
+          {
+            "chords": ["A5", "D5", "E5"],
+            "lyric": "[Aggressive power chord intro and blues-based rapid tremolo picking]"
+          },
+          {
+            "chords": ["E5"],
+            "lyric": "[Fast arpeggio runs and heavy whammy bar dive bombs]"
+          }
+        ]
+      },
+      {
+        "name": "Tapping Section",
+        "lines": [
+          {
+            "chords": ["C#m", "B", "A"],
+            "lyric": "[Two-hand finger tapping triad sequences moving down the neck]"
+          },
+          {
+            "chords": ["E"],
+            "lyric": "[Final rapid tapping crescendo building into a sustained feedback ring]"
+          }
+        ]
+      }
+    ]
+  }
+
+
 ];
 
-const DIFFICULTIES = ["All","Beginner","Intermediate","Advanced"];
+const DIFFICULTIES = ["All", "Beginner", "Intermediate", "Advanced"];
 
 function Box({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`border border-border bg-card rounded ${className}`}>{children}</div>;
@@ -98,13 +434,13 @@ function ChordToken({ chord }: { chord: string }) {
 }
 
 export function WireframeSongs() {
-  const [query,      setQuery]      = useState("");
+  const [query, setQuery] = useState("");
   const [difficulty, setDifficulty] = useState("All");
-  const [selected,   setSelected]   = useState<number|null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   const [autoScroll, setAutoScroll] = useState(false);
-  const [speed,      setSpeed]      = useState(2);
-  const scrollRef   = useRef<HTMLDivElement>(null);
-  const interval    = useRef<ReturnType<typeof setInterval>|null>(null);
+  const [speed, setSpeed] = useState(2);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const interval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const filtered = SONGS.filter(s => {
     const q = query.toLowerCase();
@@ -142,9 +478,8 @@ export function WireframeSongs() {
           </div>
           <button
             onClick={() => setAutoScroll(a => !a)}
-            className={`flex items-center gap-1 px-2.5 py-1.5 rounded border text-sm font-sans shrink-0 ${
-              autoScroll ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-border text-foreground"
-            }`}
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded border text-sm font-sans shrink-0 ${autoScroll ? "bg-primary text-primary-foreground border-primary" : "bg-muted border-border text-foreground"
+              }`}
           >
             {autoScroll ? <Pause size={10} /> : <Play size={10} />}
             Auto
@@ -200,7 +535,7 @@ export function WireframeSongs() {
 
       {/* Header */}
       <div>
-       
+
         <h2 className="text-base font-bold text-foreground mt-0.5">Songs</h2>
         <p className="text-sm text-primary">Search lyrics & chords — auto-scroll while you play.</p>
       </div>
@@ -222,9 +557,8 @@ export function WireframeSongs() {
           <button
             key={d}
             onClick={() => setDifficulty(d)}
-            className={`flex-1 py-1 rounded text-sm font-sans transition-colors ${
-              difficulty === d ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-            }`}
+            className={`flex-1 py-1 rounded text-sm font-sans transition-colors ${difficulty === d ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              }`}
           >
             {d === "All" ? "All" : d === "Beginner" ? "Beg" : d === "Intermediate" ? "Int" : "Adv"}
           </button>

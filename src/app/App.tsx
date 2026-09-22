@@ -22,8 +22,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#d0d0d0] flex items-start justify-center py-10 px-4">
-      <div className="flex flex-col items-center gap-3 w-full max-w-[1024px]">
+    <div className="min-h-dvh bg-[#d0d0d0] flex items-start justify-center py-10 px-4">
+      <div className="flex flex-col items-center gap-3 w-full max-w-[1024px] min-h-[640px]">
         {/* Phone Frame */}
         <div
           className="relative bg-background rounded-[44px] overflow-hidden shadow-2xl flex flex-col"
