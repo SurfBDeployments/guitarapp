@@ -1,6 +1,5 @@
 import { useState } from "react";
-import google from "../../imports/gsignin.png";
-import facebook from "../../imports/fbsignin.png";
+
 
 interface Props {
   onSignIn: () => void;
@@ -37,8 +36,6 @@ export function WireframeLogin({ onSignIn, onSignUp }: Props) {
       {/* Social buttons */}
 
       <div className="flex items-center gap-3 mb-6 justify-center" style={{ maxWidth: "400px", margin: "20px auto", width: "100%" }}>
-
-
 
         <button
 

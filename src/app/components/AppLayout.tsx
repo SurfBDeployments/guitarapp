@@ -26,7 +26,12 @@ const NAV: { id: Screen; label: string; icon: LucideIcon }[] = [
     { id: "tools", label: "Tools", icon: SlidersHorizontal },
 ];
 
-function ProfileOverlay({ onClose }: { onClose: () => void }) {
+interface ProfileOverlayProps {
+    onClose: () => void;
+    onSignOut: () => void;
+}
+
+function ProfileOverlay({ onClose, onSignOut }: ProfileOverlayProps) {
     return (
         <div className="absolute inset-0 z-40 flex" onClick={onClose}>
             <div
@@ -65,7 +70,10 @@ function ProfileOverlay({ onClose }: { onClose: () => void }) {
                     <p className="text-sm text-foreground mt-0.5 underline cursor-pointer">
                         jamMaster@gmail.com
                     </p>
-                    <button className="mt-3 text-sm font-medium text-[#c0392b]">
+                    <button
+                        className="mt-3 text-sm font-medium text-[#c0392b]"
+                        onClick={onSignOut}
+                    >
                         Sign Out
                     </button>
                 </div>
@@ -144,7 +152,9 @@ function BottomNav({
                     <button
                         key={n.id}
                         onClick={() => onSelect(n.id)}
-                        className={`relative flex-1 flex flex-col items-center justify-center gap-1 ${active ? "text-accent-foreground" : "accent-foreground hover:bg-muted/50"
+                        className={`relative flex-1 flex flex-col items-center justify-center gap-1 ${active
+                            ? "text-accent-foreground"
+                            : "accent-foreground hover:bg-muted/50"
                             }`}
                     >
                         <Icon size={18} />
@@ -168,17 +178,27 @@ export function AppLayout({
     children,
     activeScreen,
     onSelectScreen,
+    onSignOut,
 }: {
     children: React.ReactNode;
     activeScreen: Screen;
     onSelectScreen: (id: Screen) => void;
+    onSignOut: () => void;
 }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
         <div className="flex flex-col h-full w-full relative">
             {/* Drawer Overlay */}
-            {menuOpen && <ProfileOverlay onClose={() => setMenuOpen(false)} />}
+            {menuOpen && (
+                <ProfileOverlay
+                    onClose={() => setMenuOpen(false)}
+                    onSignOut={() => {
+                        setMenuOpen(false);
+                        onSignOut();
+                    }}
+                />
+            )}
 
             {/* Status Bar */}
             <div
