@@ -36,20 +36,20 @@ export function WireframeLanding({ onGetStarted, onLogin }: Props) {
       <div className="w-full flex flex-col gap-3 mt-6" style={{ maxWidth: "325px", margin: "20 auto", width: "100%" }}>
         <button
           onClick={onGetStarted}
-          className="w-full py-3.5 rounded-xl shadow-md bg-foreground text-primary-foreground font-medium text-sm"
+          className="w-full py-3.5 rounded-xl shadow-md bg-muted text-foreground font-medium text-sm border border-border" id="getstarted"
         >
           Get Started
         </button>
         <button
           onClick={onLogin}
-          className="w-full py-3.5 rounded-xl shadow-md bg-muted text-foreground font-medium text-sm border border-border"
+          className="w-full py-3.5 rounded-xl shadow-md bg-muted text-foreground font-medium text-sm border border-border" id="login"
         >
           Log in
         </button>
       </div>
 
       {/* Privacy */}
-      <p className="text-xs text-muted-foreground mt-4 underline underline-offset-2">
+      <p className="text-sm text-muted-foreground mt-4 underline underline-offset-2">
         Privacy Policy
       </p>
 

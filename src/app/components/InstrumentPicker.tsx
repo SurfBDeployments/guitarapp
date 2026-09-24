@@ -94,7 +94,7 @@ function Fretboard({ tuning, strings, instrumentType }: FretboardProps) {
                   >
                     {isMarkerFret && (
                       <div
-                        className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-sans font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-sm font-sans font-bold cursor-pointer hover:opacity-100 opacity-60 transition-opacity"
                         style={{ background: color + "22", color, border: `1px solid ${color}44` }}
                         title={`${noteLetter} (fret ${fretIdx + 1})`}
                       >
@@ -150,11 +150,10 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
               setTab(t);
               setSelected(t === "guitar" ? "guitar-6" : "bass-4");
             }}
-            className={`px-6 py-2 rounded-md transition-all flex items-center gap-2 ${
-              tab === t
+            className={`px-6 py-2 rounded-md transition-all flex items-center gap-2 ${tab === t
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+              }`}
           >
             {t === "guitar" ? <Guitar size={16} /> : <Music2 size={16} />}
             <span className="capitalize">{t}</span>
@@ -170,11 +169,10 @@ export function InstrumentPicker({ onSelect }: InstrumentPickerProps) {
             <button
               key={preset.id}
               onClick={() => handleSelect(preset)}
-              className={`relative p-4 rounded-xl border text-left transition-all hover:border-primary/50 ${
-                isActive
+              className={`relative p-4 rounded-xl border text-left transition-all hover:border-primary/50 ${isActive
                   ? "border-primary bg-primary/10"
                   : "border-border bg-card"
-              }`}
+                }`}
             >
               {isActive && (
                 <div className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary" />

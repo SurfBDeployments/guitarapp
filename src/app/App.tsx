@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthLayout } from "./auth/Layout";
-import { AppLayout, Screen } from "./components/AppLayout"; // Updated import path
+import { AppLayout, Screen } from "./components/AppLayout";
 import { WireframeInstrument } from "./components/WireframeInstrument";
 import { WireframeTuner } from "./components/WireframeTuner";
 import { WireframeSongs } from "./components/WireframeSongs";
@@ -81,7 +81,7 @@ export default function App() {
       </div>
 
       {/* Debug Breadcrumbs */}
-      <div className="flex items-center gap-2 text-xs font-mono text-[#666]">
+      <div className="flex items-center gap-2 text-sm font-mono text-[#666]">
         {(["landing", "login", "signup", "app"] as Flow[]).map((f, i) => (
           <span key={f} className="flex items-center gap-2">
             {i > 0 && <span className="text-[#999]">→</span>}

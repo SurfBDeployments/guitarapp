@@ -154,6 +154,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
         {(["presets", "custom"] as const).map(t => (
           <button
             key={t}
+            id="presets"
             onClick={() => setTab(t)}
             className={`px-5 py-1.5 rounded-md transition-all capitalize ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
@@ -180,6 +181,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
               {filteredPresets.map(preset => (
                 <button
                   key={preset.id}
+
                   onClick={() => { setActivePresetId(preset.id); setShowPresets(false); }}
                   className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-muted/50 transition-colors border-b border-border last:border-0 ${preset.id === activePresetId ? "text-primary" : "text-foreground"
                     }`}
@@ -279,6 +281,7 @@ export function Tuner({ selectedPreset }: TunerProps) {
               return (
                 <button
                   key={i}
+
                   onClick={() => simulatePluck(i)}
                   disabled={!listening}
                   className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl border transition-all disabled:opacity-50"
@@ -288,9 +291,9 @@ export function Tuner({ selectedPreset }: TunerProps) {
                     color: isActive ? statusColor : "#f2f2f2",
                   }}
                 >
-                  <span className="font-sans text-xs opacity-60">{i + 1}</span>
+                  <span className="font-sans text-sm opacity-60">{i + 1}</span>
                   <span className="font-sans font-bold">{note.replace(/[0-9]/g, "")}</span>
-                  {isActive && tuneStatus === "in-tune" && <span className="text-xs">✓</span>}
+                  {isActive && tuneStatus === "in-tune" && <span className="text-sm">✓</span>}
                 </button>
               );
             })}

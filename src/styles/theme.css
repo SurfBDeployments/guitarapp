@@ -126,8 +126,29 @@
 
 }
 
-button {
+button:hover#login,
+button:hover#signin,
+button:hover#getstarted,
+button:hover#continue {
+  background-color: #2c2c2c;
+  color: #ffffff;
   cursor: pointer;
+}
+
+button:hover {
+
+  cursor: pointer;
+}
+
+button:hover#songs,
+button:focus#songs,
+button:hover#presets,
+button:focus#presets {
+  outline: solid #999999 1px;
+  cursor: pointer;
+  font-size: .875rem;
+  font-weight: var(--font-weight-medium);
+
 }
 
 @layer base {
@@ -135,27 +156,10 @@ button {
     @apply border-border outline-ring/50;
   }
 
-
-  /*  body {
-    margin: 0;
-    min-height: 100vh;
-    min-width: 100vw;
-    display: flex;
-    justify-content: center;
-   
-  align-items: center;
-
-  @apply bg-background text-foreground;
-
-}
-
-*/
   body {
 
     min-height: 100vh;
     min-width: 100vw;
-
-
 
   }
 
@@ -199,10 +203,11 @@ button {
   }
 
   button {
-    font-size: var(--text-base);
+    font-size: .875rem;
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
+
 
   .intune {
     background-color: #009e52;

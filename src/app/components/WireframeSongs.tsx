@@ -291,10 +291,11 @@ export function WireframeSongs() {
       </div>
 
       {/* Difficulty filter */}
-      <div className="flex gap-1 p-0.5 bg-card border border-border rounded">
+      <div className="flex gap-1 p-0.5 bg-card border border-border rounded" >
         {DIFFICULTIES.map(d => (
           <button
             key={d}
+            id="songs"
             onClick={() => setDifficulty(d)}
             className={`flex-1 py-1 rounded text-sm font-sans transition-colors ${difficulty === d ? "bg-primary text-primary-foreground" : "text-muted-foreground"
               }`}
@@ -320,9 +321,9 @@ export function WireframeSongs() {
               <p className="text-sm font-bold text-foreground truncate">{song.title}</p>
               <p className="text-sm font-sans text-muted-foreground">{song.artist}</p>
               <div className="flex gap-1 mt-1 flex-wrap">
-                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
-                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
-                <span className="text-xs font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
+                <span className="text-sm font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.tuning}</span>
+                <span className="text-sm font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.key}</span>
+                <span className="text-sm font-sans px-1 py-0.5 bg-muted border border-border rounded">{song.difficulty}</span>
               </div>
             </div>
             <ChevronRight size={13} className="text-muted-foreground shrink-0 mt-1" />
@@ -330,7 +331,7 @@ export function WireframeSongs() {
         ))}
       </Box>
 
-      <p className="text-xs font-sans text-muted-foreground">
+      <p className="text-sm font-sans text-muted-foreground">
         [Tap a song to open chord+lyric view with auto-scroll]
       </p>
     </div>

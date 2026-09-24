@@ -56,7 +56,7 @@ function NeedleMeter({ status, cents }: { status: TuneStatus; cents: number }) {
           style={{ left: `${pct}%` }} />
         <span className="absolute left-2 text-sm font-medium text-foreground">Flat</span>
         <span className="absolute right-2  text-sm font-medium text-foreground">Sharp</span>
-        <span className="absolute left-1/2 -translate-x-1/2 text-xs font-sans text-foreground/50">0ct</span>
+        <span className="absolute left-1/2 -translate-x-1/2 text-sm font-sans text-foreground/50">0ct</span>
       </div>
       <div className="text-center h-5">
         {status === "idle" && <span className="text-sm font-sans text-muted-foreground">[ Pluck a string ]</span>}
@@ -120,7 +120,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
       <div className="flex items-start justify-between gap-2">
         <div>
           <h2 className="text-base font-bold text-foreground mt-0.5">Tuner</h2>
-          <p className="text-xs text-primary">Auto-detect sharp / flat per string.</p>
+          <p className="text-sm text-primary">Auto-detect sharp / flat per string.</p>
         </div>
         <button
           onClick={() => { setMic(m => !m); if (mic) { setStatus("idle"); setDetected(null); setActiveStr(null); } }}
@@ -137,7 +137,8 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`flex-1 py-1.5 rounded text-sm font-sans capitalize transition-colors ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+            id="presets"
+            className={`flex-1 py-1.5 rounded text-sm font-sans capitalize transition-colors ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground"} `}
           >
             {t}
           </button>
@@ -172,7 +173,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
           <div className="flex flex-wrap gap-2 mt-3">
             {activePreset.strings.map((n, i) => (
               <div key={i} className="flex flex-col items-center gap-0.5">
-                <span className="text-xs font-sans text-muted-foreground">{activePreset.hz[i]}Hz</span>
+                <span className="text-sm font-sans text-muted-foreground">{activePreset.hz[i]}Hz</span>
                 <span className="text-sm font-sans px-2 py-1 bg-muted border border-border rounded font-bold">{n}</span>
               </div>
             ))}
@@ -195,7 +196,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
           <div className="grid grid-cols-3 gap-2">
             {customStrs.map((val, i) => (
               <div key={i} className="flex flex-col gap-0.5">
-                <span className="text-xs font-sans text-muted-foreground">Str {i + 1}</span>
+                <span className="text-sm font-sans text-muted-foreground">Str {i + 1}</span>
                 <input
                   value={val}
                   onChange={e => setCustomStrs(prev => { const n = [...prev]; n[i] = e.target.value; return n; })}
@@ -257,7 +258,7 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
 
         {/* String grid */}
         <div className="w-full">
-          <p className="text-xs font-sans text-muted-foreground text-center mb-2">
+          <p className="text-sm font-sans text-muted-foreground text-center mb-2">
             {mic ? "[ Tap string or pluck to auto-detect ]" : "[ Enable mic to tune ]"}
           </p>
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(strings.length, 6)}, 1fr)` }}>
@@ -278,9 +279,9 @@ export function WireframeTuner({ selectedPresetId = "g6" }: WireframeTunerProps)
                       : "border-border bg-muted text-muted-foreground"
                     }`}
                 >
-                  <span className="text-xs opacity-50">{i + 1}</span>
+                  <span className="text-sm opacity-50">{i + 1}</span>
                   <span className="font-bold">{note.replace(/[0-9]/g, "").toUpperCase()}</span>
-                  {isInTune && <span className="text-xs">✓</span>}
+                  {isInTune && <span className="text-sm">✓</span>}
                 </button>
               );
             })}

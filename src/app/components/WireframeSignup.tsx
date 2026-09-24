@@ -172,14 +172,13 @@ export function WireframeSignup({ onSignIn, onSignUp }: Props) {
         {/* Continue button */}
         <button
           onClick={onSignIn}
-          className="w-full py-3 rounded-lg text-sm rounded-xl shadow-md font-medium text-foreground"
-          style={{ background: "#d0d0d0" }}
+          className="w-full py-3.5 rounded-xl shadow-md bg-muted text-foreground font-medium text-sm border border-border" id="continue"
         >
           Continue
         </button>
 
         {/* Forgot password */}
-        <p className="text-xs text-foreground underline underline-offset-2 text-center">
+        <p className="text-sm text-foreground underline underline-offset-2 text-center">
           Forgot password?
         </p>
       </div>

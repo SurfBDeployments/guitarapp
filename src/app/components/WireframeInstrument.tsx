@@ -42,6 +42,7 @@ function InstrumentCard({ title, image, family, activeFamily, onSelect }: Instru
         {/* 2. FIX: Adjusted image height and sizing to fit the card */}
         <CardMedia
           component="img"
+          id="presets"
           height="60"
           image={image}
           alt={title}
@@ -97,7 +98,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
           <div className="w-4 shrink-0" />
           {Array.from({ length: FRET_COUNT }, (_, i) => (
             <div key={i} className="flex-1 text-center">
-              <span className="text-xs font-sans text-muted-foreground">{i + 1}</span>
+              <span className="text-sm font-sans text-muted-foreground">{i + 1}</span>
             </div>
           ))}
         </div>
@@ -124,7 +125,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
                   />
                   {hasDot && (
                     <div className="relative z-10 w-3 h-3 rounded-full border border-border bg-card flex items-center justify-center">
-                      <span className="text-xs font-sans text-muted-foreground">{fi + 1}</span>
+                      <span className="text-sm font-sans text-muted-foreground">{fi + 1}</span>
                     </div>
                   )}
                 </div>
@@ -134,7 +135,7 @@ function MobileFretboard({ tuning, family }: FretboardProps) {
         ))}
 
         {tuning.length > 6 && (
-          <p className="text-xs font-sans text-muted-foreground mt-1 ml-8">
+          <p className="text-sm font-sans text-muted-foreground mt-1 ml-8">
             +{tuning.length - 6} more strings
           </p>
         )}
