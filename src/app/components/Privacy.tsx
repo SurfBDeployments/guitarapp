@@ -9,7 +9,7 @@ const Privacy: React.FC = () => {
 
       <div className="relative shadow-2xl flex flex-col w-full max-w-[800px] min-h-[640px]">
 
-        <article className="p-6 md:p-10 overflow-y-auto max-h-[calc(100vh-80px)] space-y-6 text-gray-800">
+        <article className="p-6 md:p-10 overflow-y-auto space-y-6 text-gray-800">
 
           <div className="maincontent max-w-2xl mx-auto space-y-6">
             <h1 className="max-w-m text-4xl font-semibold">Privacy Statement</h1>
@@ -176,7 +176,7 @@ const Privacy: React.FC = () => {
               <li>suppliers of IT services and third party service providers engaged by JamMasterTuning as further detailed in this Privacy Statement and our Terms of Service; and
                 in the event that we sell, buy or merge any business or assets, including to the prospective seller or buyer of such business or assets and their respective professional advisers.</li>
             </ul>
-            <p>
+            <p style={{ paddingBottom: "25px" }}>
               We may also share anonymous or de-identified information with other third parties in
               connection with the purposes outlined in this Privacy Statement.
             </p>
