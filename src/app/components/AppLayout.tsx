@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Privacy from "./Privacy";
 import {
     Guitar,
     Menu,
@@ -13,6 +14,7 @@ import {
     ClefTreble,
     ListMusic,
     ChevronRight,
+
 } from "lucide-react";
 
 import Guitars from "../../imports/10guitarpdpherocropbw.png";
@@ -29,9 +31,16 @@ const NAV: { id: Screen; label: string; icon: LucideIcon }[] = [
 interface ProfileOverlayProps {
     onClose: () => void;
     onSignOut: () => void;
+    onPrivacy: () => void;
 }
 
-function ProfileOverlay({ onClose, onSignOut }: ProfileOverlayProps) {
+interface ProfileOverlayProps {
+    onClose: () => void;
+    onSignOut: () => void;
+    onPrivacy?: () => void; // Added onPrivacy prop
+}
+
+function ProfileOverlay({ onClose, onSignOut, onPrivacy }: ProfileOverlayProps) {
     return (
         <div className="absolute inset-0 z-40 flex" onClick={onClose}>
             <div
@@ -101,12 +110,24 @@ function ProfileOverlay({ onClose, onSignOut }: ProfileOverlayProps) {
                         {[
                             { label: "App Share", Icon: Share2 },
                             { label: "Help?", Icon: HelpCircle },
-                            { label: "Privacy", Icon: Lock },
-                        ].map(({ Icon, label }) => (
-                            <div key={label} className="flex items-center justify-start gap-4">
+                            {
+                                label: "Privacy",
+                                Icon: Lock,
+                                onClick: () => {
+                                    onClose();
+                                    onPrivacy?.();
+                                }
+                            },
+                        ].map(({ Icon, label, onClick }) => (
+                            <button
+                                key={label}
+                                type="button"
+                                onClick={onClick}
+                                className="flex items-center justify-start gap-4 w-full text-left hover:opacity-70 transition-opacity cursor-pointer"
+                            >
                                 <Icon size={18} className="text-muted-foreground" />
                                 <span className="text-sm text-foreground">{label}</span>
-                            </div>
+                            </button>
                         ))}
                     </div>
                 </div>
@@ -179,11 +200,13 @@ export function AppLayout({
     activeScreen,
     onSelectScreen,
     onSignOut,
+    onPrivacy, // Receive onPrivacy handler
 }: {
     children: React.ReactNode;
     activeScreen: Screen;
     onSelectScreen: (id: Screen) => void;
     onSignOut: () => void;
+    onPrivacy: () => void;
 }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -197,8 +220,14 @@ export function AppLayout({
                         setMenuOpen(false);
                         onSignOut();
                     }}
+                    onPrivacy={() => {
+                        setMenuOpen(false);
+                        onPrivacy();
+                    }}
                 />
             )}
+
+            {/* ... rest of AppLayout ... */}
 
             {/* Status Bar */}
             <div

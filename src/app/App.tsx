@@ -8,8 +8,9 @@ import { WireframeTools } from "./components/WireframeTools";
 import { WireframeLanding } from "./components/WireframeLanding";
 import { WireframeLogin } from "./components/WireframeLogin";
 import { WireframeSignup } from "./components/WireframeSignup";
+import Privacy from "./components/Privacy";
 
-type Flow = "landing" | "login" | "signup" | "app";
+type Flow = "landing" | "login" | "signup" | "app" | "privacy";
 
 export default function App() {
   const [flow, setFlow] = useState<Flow>("landing");
@@ -23,14 +24,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[640px]">
-
-      {/* Phone Frame */}
+      {/* Phone / Main Container Frame */}
       <div
-        className="relative overflow-hidden shadow-2xl flex flex-col"
+        className="relative overflow-hidden shadow-2xl flex flex-col w-full max-w-[800px] min-h-[640px]"
         style={{
-          width: "100%",
-          maxWidth: 800,
-          height: "100%",
           background: "linear-gradient(to bottom, #FFE8A3 5%, #ffffff 95%)",
         }}
       >
@@ -40,6 +37,7 @@ export default function App() {
             <WireframeLanding
               onGetStarted={() => setFlow("signup")}
               onLogin={() => setFlow("login")}
+              onPrivacy={() => setFlow("privacy")}
             />
           </AuthLayout>
         )}
@@ -62,12 +60,43 @@ export default function App() {
           </AuthLayout>
         )}
 
+        {flow === "privacy" && (
+          <AuthLayout>
+            {/* Added top navigation header bar inside Privacy flow */}
+            <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
+              <button
+                onClick={() => setFlow("landing")}
+                className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+              >
+                ← Back
+              </button>
+              <div className="flex gap-4 items-center">
+                <button
+                  onClick={() => setFlow("login")}
+                  className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                >
+                  Log In
+                </button>
+                <button
+                  onClick={() => setFlow("signup")}
+                  className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+
+            <Privacy onPrivacy={() => setFlow("landing")} />
+          </AuthLayout>
+        )}
+
         {/* Main App Screens */}
         {flow === "app" && (
           <AppLayout
             activeScreen={screen}
             onSelectScreen={setScreen}
             onSignOut={() => setFlow("landing")}
+            onPrivacy={() => setFlow("privacy")}
           >
             {screen === "instrument" && (
               <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />
@@ -80,8 +109,6 @@ export default function App() {
           </AppLayout>
         )}
       </div>
-
-
     </div>
   );
 }

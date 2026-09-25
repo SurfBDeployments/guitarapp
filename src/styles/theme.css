@@ -141,7 +141,8 @@ link:hover {
   cursor: pointer;
 }
 
-button:hover#signup {
+button:hover#signup,
+button:hover#priv {
   text-decoration: none;
   cursor: pointer;
 }

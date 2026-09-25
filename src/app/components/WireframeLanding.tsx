@@ -1,11 +1,14 @@
 import landingbassImg from "../../imports/landingbass.png";
 
+
 interface Props {
   onGetStarted: () => void;
   onLogin: () => void;
+  onPrivacy: () => void;
 }
 
-export function WireframeLanding({ onGetStarted, onLogin }: Props) {
+
+export function WireframeLanding({ onGetStarted, onLogin, onPrivacy }: Props) {
   return (
     <div className="flex flex-col items-center px-6" style={{ minHeight: "100%", paddingBottom: 40 }}>
 
@@ -49,9 +52,14 @@ export function WireframeLanding({ onGetStarted, onLogin }: Props) {
       </div>
 
       {/* Privacy */}
-      <p className="text-sm text-muted-foreground mt-4 underline underline-offset-2">
+
+      <button
+        className="text-sm text-muted-foreground underline text-foreground underline-offset-2 mt-4" id="priv"
+        onClick={() => onPrivacy()}
+      >
         Privacy Policy
-      </p>
+      </button>
+
 
       {/* Home indicator */}
       <div className="w-28 h-1 rounded-full bg-foreground/20 mt-8 mx-auto" />
