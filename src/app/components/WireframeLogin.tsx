@@ -15,7 +15,7 @@ export function WireframeLogin({ onSignIn, onSignUp }: Props) {
 
       {/* Sign Up link top-right */}
       <div className="flex justify-end pt-2 pb-4">
-        <button onClick={onSignUp} className="text-sm text-foreground underline underline-offset-2">
+        <button onClick={onSignUp} className="text-sm text-muted-foreground underline text-foreground underline-offset-2" id="signup">
           Sign Up
         </button>
       </div>
@@ -105,7 +105,7 @@ export function WireframeLogin({ onSignIn, onSignUp }: Props) {
         </button>
 
         {/* Forgot password */}
-        <p className="text-sm text-foreground underline underline-offset-2 text-center">
+        <p className="text-sm text-muted-foreground hover:text-foreground underline-offset-2 text-center">
           Forgot password?
         </p>
       </div>

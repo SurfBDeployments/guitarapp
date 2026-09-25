@@ -25,11 +25,13 @@ export default function App() {
     <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[640px]">
       {/* Phone Frame */}
       <div
-        className="relative bg-background overflow-hidden shadow-2xl flex flex-col"
+        className="relative bg-background rounded-[44px] overflow-hidden shadow-2xl flex flex-col"
         style={{
           width: "100%",
           maxWidth: 800,
           height: "100%",
+          border: "10px solid #222",
+          boxShadow: "0 0 0 2px #444, 0 32px 64px rgba(0,0,0,0.45)", 
           background: "linear-gradient(to bottom, #FFE8A3 5%, #ffffff 95%)",
         }}
       >
@@ -85,11 +87,13 @@ export default function App() {
         {(["landing", "login", "signup", "app"] as Flow[]).map((f, i) => (
           <span key={f} className="flex items-center gap-2">
             {i > 0 && <span className="text-[#999]">→</span>}
+            {/* Phone shell */}
+
             <button
               onClick={() => setFlow(f)}
               className={`underline-offset-2 ${flow === f
                 ? "text-[#333] font-bold underline"
-                : "text-[#888] hover:text-[#555]"
+                : "text-[#ab312b] hover:text-[#575757]"
                 }`}
             >
               {f === "app"

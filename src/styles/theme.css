@@ -135,8 +135,14 @@ button:hover#continue {
   cursor: pointer;
 }
 
-button:hover {
+button:hover,
+link:hover {
 
+  cursor: pointer;
+}
+
+button:hover#signup {
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -221,5 +227,12 @@ button:focus#presets {
     font-size: var(--text-base);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+
+  .stsearch-box input {
+
+
+    border: none !important;
+
   }
 }
