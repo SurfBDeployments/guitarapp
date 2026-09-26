@@ -14,7 +14,6 @@ import {
     ClefTreble,
     ListMusic,
     ChevronRight,
-
 } from "lucide-react";
 
 import Guitars from "../../imports/10guitarpdpherocropbw.png";
@@ -32,12 +31,6 @@ interface ProfileOverlayProps {
     onClose: () => void;
     onSignOut: () => void;
     onPrivacy: () => void;
-}
-
-interface ProfileOverlayProps {
-    onClose: () => void;
-    onSignOut: () => void;
-    onPrivacy?: () => void; // Added onPrivacy prop
 }
 
 function ProfileOverlay({ onClose, onSignOut, onPrivacy }: ProfileOverlayProps) {
@@ -116,7 +109,7 @@ function ProfileOverlay({ onClose, onSignOut, onPrivacy }: ProfileOverlayProps) 
                                 onClick: () => {
                                     onClose();
                                     onPrivacy?.();
-                                }
+                                },
                             },
                         ].map(({ Icon, label, onClick }) => (
                             <button
@@ -195,20 +188,34 @@ function BottomNav({
     );
 }
 
-export function AppLayout({
-    children,
-    activeScreen,
-    onSelectScreen,
-    onSignOut,
-    onPrivacy, // Receive onPrivacy handler
-}: {
+interface AppLayoutProps {
     children: React.ReactNode;
     activeScreen: Screen;
     onSelectScreen: (id: Screen) => void;
     onSignOut: () => void;
     onPrivacy: () => void;
-}) {
+    onBack?: () => void;
+    canGoBack?: boolean;
+}
+
+export function AppLayout({
+    children,
+    activeScreen,
+    onSelectScreen,
+    onSignOut,
+    onPrivacy,
+    onBack,
+    canGoBack = true,
+}: AppLayoutProps) {
     const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleBackClick = () => {
+        if (onBack) {
+            onBack();
+        } else {
+            window.history.back();
+        }
+    };
 
     return (
         <div className="flex flex-col h-full w-full relative">
@@ -227,8 +234,6 @@ export function AppLayout({
                 />
             )}
 
-            {/* ... rest of AppLayout ... */}
-
             {/* Status Bar */}
             <div
                 className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-border shrink-0"
@@ -241,19 +246,33 @@ export function AppLayout({
                 </div>
             </div>
 
-            {/* Top Header with Hamburger */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border shrink-0">
-                <span className="font-sans font-bold text-lg text-foreground tracking-wide">
+            {/* Top Header Row with Back, Title, and Hamburger */}
+            <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm shrink-0">
+                {canGoBack ? (
+                    <button
+                        onClick={handleBackClick}
+                        className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                    >
+                        ← Back
+                    </button>
+                ) : (
+                    <div className="w-12" />
+                )}
+
+                <span className="font-sans font-bold text-2xl text-foreground tracking-wide">
                     JamMaster Tuning
                 </span>
-                <button
-                    type="button"
-                    onClick={() => setMenuOpen(true)}
-                    aria-label="Open menu"
-                    className="w-7 h-7 rounded border border-border flex items-center justify-center"
-                >
-                    <Menu size={14} className="text-foreground" />
-                </button>
+
+                <div className="flex items-center justify-between">
+                    <button
+                        type="button"
+                        onClick={() => setMenuOpen(true)}
+                        aria-label="Open menu"
+                        className="w-7 h-7 rounded border border-border flex items-center justify-center"
+                    >
+                        <Menu size={14} className="text-foreground" />
+                    </button>
+                </div>
             </div>
 
             {/* Active Screen View */}

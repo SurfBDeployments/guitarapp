@@ -10,21 +10,47 @@ import { WireframeLogin } from "./components/WireframeLogin";
 import { WireframeSignup } from "./components/WireframeSignup";
 import Privacy from "./components/Privacy";
 
-type Flow = "landing" | "login" | "signup" | "app" | "privacy";
+export type Flow = "landing" | "login" | "signup" | "app" | "privacy";
+
+export interface NavState {
+  flow: Flow;
+  screen?: Screen;
+}
 
 export default function App() {
-  const [flow, setFlow] = useState<Flow>("landing");
-  const [screen, setScreen] = useState<Screen>("instrument");
+  // Navigation stack keeping track of full user journey
+  const [history, setHistory] = useState<NavState[]>([
+    { flow: "landing", screen: "instrument" },
+  ]);
   const [activePresetId, setActivePresetId] = useState<string>("g6");
+
+  // Current active view state is always the last item in history
+  const currentState = history[history.length - 1];
+  const flow = currentState.flow;
+  const screen = currentState.screen || "instrument";
+
+  // Helper to push a new view onto the stack
+  const navigateTo = (newFlow: Flow, newScreen?: Screen) => {
+    setHistory((prev) => [
+      ...prev,
+      { flow: newFlow, screen: newScreen ?? prev[prev.length - 1]?.screen ?? "instrument" },
+    ]);
+  };
+
+  // Handler for going back one step
+  const handleBack = () => {
+    if (history.length > 1) {
+      setHistory((prev) => prev.slice(0, -1));
+    }
+  };
 
   const handleNavigateToTuner = (preset: { id: string }) => {
     setActivePresetId(preset.id);
-    setScreen("tune");
+    navigateTo("app", "tune");
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[640px]">
-      {/* Phone / Main Container Frame */}
       <div
         className="relative overflow-hidden shadow-2xl flex flex-col w-full max-w-[800px] min-h-[640px]"
         style={{
@@ -35,9 +61,9 @@ export default function App() {
         {flow === "landing" && (
           <AuthLayout>
             <WireframeLanding
-              onGetStarted={() => setFlow("signup")}
-              onLogin={() => setFlow("login")}
-              onPrivacy={() => setFlow("privacy")}
+              onGetStarted={() => navigateTo("signup")}
+              onLogin={() => navigateTo("login")}
+              onPrivacy={() => navigateTo("privacy")}
             />
           </AuthLayout>
         )}
@@ -45,8 +71,8 @@ export default function App() {
         {flow === "login" && (
           <AuthLayout>
             <WireframeLogin
-              onSignIn={() => setFlow("app")}
-              onSignUp={() => setFlow("signup")}
+              onSignIn={() => navigateTo("app", "instrument")}
+              onSignUp={() => navigateTo("signup")}
             />
           </AuthLayout>
         )}
@@ -54,31 +80,30 @@ export default function App() {
         {flow === "signup" && (
           <AuthLayout>
             <WireframeSignup
-              onSignIn={() => setFlow("app")}
-              onSignUp={() => setFlow("login")}
+              onSignIn={() => navigateTo("app", "instrument")}
+              onSignUp={() => navigateTo("login")}
             />
           </AuthLayout>
         )}
 
         {flow === "privacy" && (
           <AuthLayout>
-            {/* Added top navigation header bar inside Privacy flow */}
             <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
               <button
-                onClick={() => setFlow("landing")}
+                onClick={handleBack}
                 className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
               >
                 ← Back
               </button>
               <div className="flex gap-4 items-center">
                 <button
-                  onClick={() => setFlow("login")}
+                  onClick={() => navigateTo("login")}
                   className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
                 >
                   Log In
                 </button>
                 <button
-                  onClick={() => setFlow("signup")}
+                  onClick={() => navigateTo("signup")}
                   className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
                 >
                   Sign Up
@@ -86,7 +111,7 @@ export default function App() {
               </div>
             </div>
 
-            <Privacy onPrivacy={() => setFlow("landing")} />
+            <Privacy onPrivacy={handleBack} />
           </AuthLayout>
         )}
 
@@ -94,9 +119,11 @@ export default function App() {
         {flow === "app" && (
           <AppLayout
             activeScreen={screen}
-            onSelectScreen={setScreen}
-            onSignOut={() => setFlow("landing")}
-            onPrivacy={() => setFlow("privacy")}
+            onSelectScreen={(nextScreen) => navigateTo("app", nextScreen)}
+            onBack={handleBack}
+            canGoBack={history.length > 1}
+            onSignOut={() => setHistory([{ flow: "landing", screen: "instrument" }])}
+            onPrivacy={() => navigateTo("privacy")}
           >
             {screen === "instrument" && (
               <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />
