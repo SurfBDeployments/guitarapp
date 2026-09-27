@@ -4,9 +4,10 @@ import { useState } from "react";
 interface Props {
   onSignIn: () => void;
   onSignUp: () => void;
+  onForgot: () => void;
 }
 
-export function WireframeLogin({ onSignIn, onSignUp }: Props) {
+export function Login({ onSignIn, onSignUp, onForgot }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -104,10 +105,14 @@ export function WireframeLogin({ onSignIn, onSignUp }: Props) {
           Sign In
         </button>
 
+
         {/* Forgot password */}
-        <p className="text-sm text-muted-foreground hover:text-foreground underline-offset-2 text-center">
+        <button
+          onClick={() => onForgot()}
+          className="text-sm text-muted-foreground underline text-foreground underline-offset-2 mt-4" id="priv"
+        >
           Forgot password?
-        </p>
+        </button>
       </div>
 
       {/* Home indicator */}

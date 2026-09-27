@@ -14,7 +14,7 @@ const Privacy: React.FC = () => {
           <div className="maincontent max-w-2xl mx-auto space-y-6">
             <h1 className="max-w-m text-4xl font-semibold">Privacy Statement</h1>
 
-            <h3 className="max-w-m text-2xl font-condensed-light leading-normal" style={{ marginBottom: '20px' }}>
+            <h3 className="max-w-m text-xl font-condensed-light leading-normal" style={{ marginBottom: '20px' }}>
               At JamMasterTuning, your privacy is important to us. The purpose of this privacy
               statement is to let you know how we collect, use and disclose Personal Information, and
               to inform you of your rights with respect to such Personal Information. This Privacy

@@ -217,7 +217,7 @@ function ScaleFinder() {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
-export function WireframeTools() {
+export function Tools() {
   const [tool, setTool] = useState<"chord" | "scale">("chord");
 
   return (

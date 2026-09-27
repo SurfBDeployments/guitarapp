@@ -172,7 +172,7 @@ function ChordToken({ chord }: { chord: string }) {
   );
 }
 
-export function WireframeSongs() {
+export function Songs() {
   const [query, setQuery] = useState("");
   const [difficulty, setDifficulty] = useState("All");
   const [selected, setSelected] = useState<number | null>(null);

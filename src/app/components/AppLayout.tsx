@@ -14,6 +14,7 @@ import {
     ClefTreble,
     ListMusic,
     ChevronRight,
+    ShieldLock,
 } from "lucide-react";
 
 import Guitars from "../../imports/10guitarpdpherocropbw.png";
@@ -194,6 +195,7 @@ interface AppLayoutProps {
     onSelectScreen: (id: Screen) => void;
     onSignOut: () => void;
     onPrivacy: () => void;
+    onForgot: () => void;
     onBack?: () => void;
     canGoBack?: boolean;
 }

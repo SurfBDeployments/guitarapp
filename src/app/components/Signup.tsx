@@ -30,7 +30,7 @@ interface City {
   name: string;
 }
 
-export function WireframeSignup({ onSignIn, onSignUp }: Props) {
+export function Signup({ onSignIn, onSignUp }: Props) {
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -198,10 +198,7 @@ export function WireframeSignup({ onSignIn, onSignUp }: Props) {
           Continue
         </button>
 
-        {/* Forgot password */}
-        <p className="text-sm text-foreground underline text-center">
-          Forgot password?
-        </p>
+
       </div>
 
       {/* Home indicator */}

@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { AuthLayout } from "./auth/Layout";
 import { AppLayout, Screen } from "./components/AppLayout";
-import { WireframeInstrument } from "./components/WireframeInstrument";
+import { Instrument } from "./components/Instrument";
 import { WireframeTuner } from "./components/WireframeTuner";
-import { WireframeSongs } from "./components/WireframeSongs";
-import { WireframeTools } from "./components/WireframeTools";
-import { WireframeLanding } from "./components/WireframeLanding";
-import { WireframeLogin } from "./components/WireframeLogin";
-import { WireframeSignup } from "./components/WireframeSignup";
+import { Songs } from "./components/Songs";
+import { Tools } from "./components/Tools";
+import { Landing } from "./components/Landing";
+import { Login } from "./components/Login";
+import { Signup } from "./components/Signup";
+import { ForgotPassword } from "./components/Forgotpassword";
 import Privacy from "./components/Privacy";
 
-export type Flow = "landing" | "login" | "signup" | "app" | "privacy";
+export type Flow = "landing" | "login" | "signup" | "app" | "privacy" | "forgot";
 
 export interface NavState {
   flow: Flow;
@@ -60,32 +61,43 @@ export default function App() {
         {/* Auth Flow Screens */}
         {flow === "landing" && (
           <AuthLayout>
-            <WireframeLanding
+            <Landing
               onGetStarted={() => navigateTo("signup")}
               onLogin={() => navigateTo("login")}
               onPrivacy={() => navigateTo("privacy")}
+
             />
           </AuthLayout>
         )}
 
         {flow === "login" && (
           <AuthLayout>
-            <WireframeLogin
+            <Login
               onSignIn={() => navigateTo("app", "instrument")}
               onSignUp={() => navigateTo("signup")}
+              onForgot={() => navigateTo("forgot")}
             />
           </AuthLayout>
         )}
 
         {flow === "signup" && (
           <AuthLayout>
-            <WireframeSignup
+            <Signup
               onSignIn={() => navigateTo("app", "instrument")}
               onSignUp={() => navigateTo("login")}
             />
           </AuthLayout>
         )}
-
+        {flow === "forgot" && (
+          <AuthLayout>
+            <ForgotPassword
+              onSignIn={() => navigateTo("login")}
+              onSignUp={() => navigateTo("signup")}
+              onBack={handleBack}
+              canGoBack={history.length > 1}
+            />
+          </AuthLayout>
+        )}
         {flow === "privacy" && (
           <AuthLayout>
             <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
@@ -121,18 +133,19 @@ export default function App() {
             activeScreen={screen}
             onSelectScreen={(nextScreen) => navigateTo("app", nextScreen)}
             onBack={handleBack}
+            onForgot={() => navigateTo("forgot")}
             canGoBack={history.length > 1}
             onSignOut={() => setHistory([{ flow: "landing", screen: "instrument" }])}
             onPrivacy={() => navigateTo("privacy")}
           >
             {screen === "instrument" && (
-              <WireframeInstrument onNavigateToTuner={handleNavigateToTuner} />
+              <Instrument onNavigateToTuner={handleNavigateToTuner} />
             )}
             {screen === "tune" && (
               <WireframeTuner selectedPresetId={activePresetId} />
             )}
-            {screen === "music" && <WireframeSongs />}
-            {screen === "tools" && <WireframeTools />}
+            {screen === "music" && <Songs />}
+            {screen === "tools" && <Tools />}
           </AppLayout>
         )}
       </div>

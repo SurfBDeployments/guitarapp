@@ -159,7 +159,7 @@ interface Props {
   onNavigateToTuner: (p: { id: string; label: string; tuning: string[]; family: InstrumentFamily }) => void;
 }
 
-export function WireframeInstrument({ onNavigateToTuner }: Props) {
+export function Instrument({ onNavigateToTuner }: Props) {
   const [family, setFamily] = useState<InstrumentFamily>("guitar");
   const [selectedId, setSelectedId] = useState("g6");
 

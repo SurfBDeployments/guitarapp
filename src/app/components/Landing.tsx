@@ -8,7 +8,7 @@ interface Props {
 }
 
 
-export function WireframeLanding({ onGetStarted, onLogin, onPrivacy }: Props) {
+export function Landing({ onGetStarted, onLogin, onPrivacy }: Props) {
   return (
     <div className="flex flex-col items-center px-6" style={{ minHeight: "100%", paddingBottom: 40 }}>
 
