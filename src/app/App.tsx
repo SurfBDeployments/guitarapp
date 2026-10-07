@@ -11,6 +11,8 @@ import { Signup } from "./components/Signup";
 import { ForgotPassword } from "./components/Forgotpassword";
 import { WireframeTunerSettings, Instrument as InstrumentType } from "./components/WireframeTunerSettings";
 import Privacy from "./components/Privacy";
+import { ArrowLeft } from "lucide-react";
+import { style } from "@mui/system";
 
 export type Flow = "landing" | "login" | "signup" | "app" | "privacy" | "forgot" | "tunings";
 
@@ -108,9 +110,10 @@ export default function App() {
             <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
               <button
                 onClick={handleBack}
-                className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                className="text-sm font-medium text-gray-800 hover:text-black transition-colors justify-content"
               >
-                ← Back
+                <ArrowLeft size={18} style={{ display: "inline" }} /> Back
+
               </button>
               <div className="flex gap-4 items-center">
                 <button

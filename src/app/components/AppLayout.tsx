@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Privacy from "./Privacy";
+
 import {
     Guitar,
     Menu,
@@ -14,7 +14,8 @@ import {
     ClefTreble,
     ListMusic,
     ChevronRight,
-    ShieldLock,
+    ArrowLeft
+
 } from "lucide-react";
 
 import Guitars from "../../imports/10guitarpdpherocropbw.png";
@@ -259,17 +260,6 @@ export function AppLayout({
                 />
             )}
 
-            {/* Status Bar */}
-            <div
-                className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-border shrink-0"
-                style={{ background: "rgba(255,232,163,0.85)", height: 44 }}
-            >
-                <span className="text-sm font-sans text-primary">9:41</span>
-                <div className="w-24 h-5 rounded-full bg-[#222] absolute left-1/2 -translate-x-1/2 top-2" />
-                <div className="flex items-center gap-1">
-                    <span className="text-sm font-sans text-primary">●●●</span>
-                </div>
-            </div>
 
             {/* Top Header Row with Back, Title, and Hamburger */}
             <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm shrink-0">
@@ -278,7 +268,7 @@ export function AppLayout({
                         onClick={handleBackClick}
                         className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
                     >
-                        ← Back
+                        <ArrowLeft size={18} style={{ display: "inline" }} /> Back
                     </button>
                 ) : (
                     <div className="w-12" />
@@ -295,7 +285,7 @@ export function AppLayout({
                         aria-label="Open menu"
                         className="w-7 h-7 rounded border border-border flex items-center justify-center"
                     >
-                        <Menu size={14} className="text-foreground" />
+                        <Menu size={16} className="text-foreground" />
                     </button>
                 </div>
             </div>

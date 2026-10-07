@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ShieldLock } from 'lucide-react';
+import { ShieldLock, ArrowLeft } from 'lucide-react';
 
 interface Props {
   onSignIn: () => void;
@@ -32,7 +32,7 @@ export function ForgotPassword({ onSignIn, onSignUp, onBack, canGoBack }: Props)
               onClick={handleBackClick}
               className="items-center text-sm font-medium text-gray-800 hover:text-black transition-colors"
             >
-              ← Back
+              <ArrowLeft size={18} style={{ display: "inline" }} /> Back
             </button>
           ) : (
             <div className="w-12" />
