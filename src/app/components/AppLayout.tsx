@@ -32,9 +32,10 @@ interface ProfileOverlayProps {
     onClose: () => void;
     onSignOut: () => void;
     onPrivacy: () => void;
+    onTunerSettings: () => void;
 }
 
-function ProfileOverlay({ onClose, onSignOut, onPrivacy }: ProfileOverlayProps) {
+function ProfileOverlay({ onClose, onSignOut, onPrivacy, onTunerSettings }: ProfileOverlayProps) {
     return (
         <div className="absolute inset-0 z-40 flex" onClick={onClose}>
             <div
@@ -81,19 +82,32 @@ function ProfileOverlay({ onClose, onSignOut, onPrivacy }: ProfileOverlayProps) 
                     </button>
                 </div>
 
+
                 <div className="px-5 py-5 border-b border-border">
                     <p className="text-sm font-bold text-foreground mb-4">Tool Settings</p>
                     <div className="flex flex-col gap-3.5">
                         {[
-                            { label: "Tuner", Icon: Radio },
+                            {
+                                label: "Tuner",
+                                Icon: Radio,
+                                onClick: () => {
+                                    onClose();
+                                    onTunerSettings();
+                                }
+                            },
                             { label: "Scales", Icon: ClefTreble },
                             { label: "Chords", Icon: ListMusic },
-                        ].map(({ label, Icon }) => (
-                            <div key={label} className="flex items-center justify-start gap-4">
+                        ].map(({ label, Icon, onClick }) => (
+                            <button
+                                key={label}
+                                type="button"
+                                onClick={onClick}
+                                className="flex items-center justify-start gap-4 w-full text-left hover:opacity-70 transition-opacity"
+                            >
                                 <Icon size={18} className="text-muted-foreground" />
                                 <span className="text-sm text-foreground">{label}</span>
                                 <ChevronRight size={15} className="text-muted-foreground ml-auto" />
-                            </div>
+                            </button>
                         ))}
                     </div>
                 </div>
@@ -198,6 +212,7 @@ interface AppLayoutProps {
     onForgot: () => void;
     onBack?: () => void;
     canGoBack?: boolean;
+    onTunerSettings: () => void;
 }
 
 export function AppLayout({
@@ -207,9 +222,11 @@ export function AppLayout({
     onSignOut,
     onPrivacy,
     onBack,
+    onTunerSettings,
     canGoBack = true,
 }: AppLayoutProps) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [tunerOpenSettings, setTunerOpenSettings] = useState(false);
 
     const handleBackClick = () => {
         if (onBack) {
@@ -220,7 +237,9 @@ export function AppLayout({
     };
 
     return (
-        <div className="flex flex-col h-full w-full relative">
+        <div className="flex flex-col h-full w-full relative" style={{
+            minHeight: "800px"
+        }} >
             {/* Drawer Overlay */}
             {menuOpen && (
                 <ProfileOverlay
@@ -232,6 +251,10 @@ export function AppLayout({
                     onPrivacy={() => {
                         setMenuOpen(false);
                         onPrivacy();
+                    }}
+                    onTunerSettings={() => {
+                        setMenuOpen(false);
+                        onTunerSettings();
                     }}
                 />
             )}

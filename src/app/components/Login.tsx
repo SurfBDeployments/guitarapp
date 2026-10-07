@@ -114,9 +114,6 @@ export function Login({ onSignIn, onSignUp, onForgot }: Props) {
           Forgot password?
         </button>
       </div>
-
-      {/* Home indicator */}
-      <div className="w-28 h-1 rounded-full bg-foreground/20 mt-8 mx-auto" />
     </div>
   );
 }

@@ -51,7 +51,7 @@ const SONGS = [
       },
     ],
   },
-  {
+  /* {
     id: 4, title: "Sweet Home Chicago", artist: "Robert Johnson", key: "E",
     tempo: "120 BPM", difficulty: "Advanced", tuning: "Open G",
     sections: [
@@ -63,7 +63,7 @@ const SONGS = [
         ],
       },
     ],
-  },
+  }, */
   {
     id: 5, title: "Smoke on the Water", artist: "Deep Purple", key: "Gm",
     tempo: "112 BPM", difficulty: "Beginner", tuning: "Standard",

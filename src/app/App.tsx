@@ -9,9 +9,10 @@ import { Landing } from "./components/Landing";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { ForgotPassword } from "./components/Forgotpassword";
+import { WireframeTunerSettings, Instrument as InstrumentType } from "./components/WireframeTunerSettings";
 import Privacy from "./components/Privacy";
 
-export type Flow = "landing" | "login" | "signup" | "app" | "privacy" | "forgot";
+export type Flow = "landing" | "login" | "signup" | "app" | "privacy" | "forgot" | "tunings";
 
 export interface NavState {
   flow: Flow;
@@ -19,18 +20,20 @@ export interface NavState {
 }
 
 export default function App() {
-  // Navigation stack keeping track of full user journey
   const [history, setHistory] = useState<NavState[]>([
     { flow: "landing", screen: "instrument" },
   ]);
   const [activePresetId, setActivePresetId] = useState<string>("g6");
 
-  // Current active view state is always the last item in history
+  // Global Tuner Settings State
+  const [selectedInstrument, setSelectedInstrument] = useState<InstrumentType>("guitar");
+  const [selectedTuning, setSelectedTuning] = useState<string>("Standard (E-A-D-G-B-E)");
+  const [soundDisabled, setSoundDisabled] = useState<boolean>(false);
+
   const currentState = history[history.length - 1];
   const flow = currentState.flow;
   const screen = currentState.screen || "instrument";
 
-  // Helper to push a new view onto the stack
   const navigateTo = (newFlow: Flow, newScreen?: Screen) => {
     setHistory((prev) => [
       ...prev,
@@ -38,7 +41,6 @@ export default function App() {
     ]);
   };
 
-  // Handler for going back one step
   const handleBack = () => {
     if (history.length > 1) {
       setHistory((prev) => prev.slice(0, -1));
@@ -51,10 +53,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[640px]">
+    <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[800px]">
       <div
-        className="relative overflow-hidden shadow-2xl flex flex-col w-full max-w-[800px] min-h-[640px]"
+        className="relative bg-background overflow-auto flex flex-col w-full max-w-[800px] min-h-[800px]"
+        //className="relative bg-background rounded-[44px] overflow-auto flex flex-col w-full max-w-[800px] min-h-[800px]"
         style={{
+          //border: "10px solid #222",
           background: "linear-gradient(to bottom, #FFE8A3 5%, #ffffff 95%)",
         }}
       >
@@ -65,7 +69,6 @@ export default function App() {
               onGetStarted={() => navigateTo("signup")}
               onLogin={() => navigateTo("login")}
               onPrivacy={() => navigateTo("privacy")}
-
             />
           </AuthLayout>
         )}
@@ -88,6 +91,7 @@ export default function App() {
             />
           </AuthLayout>
         )}
+
         {flow === "forgot" && (
           <AuthLayout>
             <ForgotPassword
@@ -98,6 +102,7 @@ export default function App() {
             />
           </AuthLayout>
         )}
+
         {flow === "privacy" && (
           <AuthLayout>
             <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
@@ -122,13 +127,12 @@ export default function App() {
                 </button>
               </div>
             </div>
-
-            <Privacy onPrivacy={handleBack} />
+            <Privacy />
           </AuthLayout>
         )}
 
-        {/* Main App Screens */}
-        {flow === "app" && (
+        {/* Main App & Settings Screens */}
+        {(flow === "app" || flow === "tunings") && (
           <AppLayout
             activeScreen={screen}
             onSelectScreen={(nextScreen) => navigateTo("app", nextScreen)}
@@ -137,15 +141,30 @@ export default function App() {
             canGoBack={history.length > 1}
             onSignOut={() => setHistory([{ flow: "landing", screen: "instrument" }])}
             onPrivacy={() => navigateTo("privacy")}
+            onTunerSettings={() => navigateTo("tunings")}
           >
-            {screen === "instrument" && (
-              <Instrument onNavigateToTuner={handleNavigateToTuner} />
+            {flow === "tunings" ? (
+              <WireframeTunerSettings
+                onBack={handleBack}
+                instrument={selectedInstrument}
+                tuning={selectedTuning}
+                soundDisabled={soundDisabled}
+                onInstrumentChange={setSelectedInstrument}
+                onTuningChange={setSelectedTuning}
+                onSoundToggle={() => setSoundDisabled((prev) => !prev)}
+              />
+            ) : (
+              <>
+                {screen === "instrument" && (
+                  <Instrument onNavigateToTuner={handleNavigateToTuner} />
+                )}
+                {screen === "tune" && (
+                  <WireframeTuner selectedPresetId={activePresetId} />
+                )}
+                {screen === "music" && <Songs />}
+                {screen === "tools" && <Tools />}
+              </>
             )}
-            {screen === "tune" && (
-              <WireframeTuner selectedPresetId={activePresetId} />
-            )}
-            {screen === "music" && <Songs />}
-            {screen === "tools" && <Tools />}
           </AppLayout>
         )}
       </div>

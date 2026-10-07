@@ -2,7 +2,9 @@ import React from "react";
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col h-full w-full relative">
+    <div className="flex flex-col h-full w-full relative" style={{
+      minHeight: "800px"
+    }}>
       {/* Top Status Bar Only */}
       <div
         className="flex items-center justify-between px-6 pt-3 pb-1 border-b border-border shrink-0"

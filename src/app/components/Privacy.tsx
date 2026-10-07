@@ -184,7 +184,9 @@ const Privacy: React.FC = () => {
           </div>
 
         </article>
+
       </div>
+
 
     </>
   );

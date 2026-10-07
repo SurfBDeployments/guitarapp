@@ -82,12 +82,9 @@ export function ForgotPassword({ onSignIn, onSignUp, onBack, canGoBack }: Props)
 
           </div>
 
-
-
-
         </div>
-        {/* Home indicator */}
-        <div className="w-28 h-1 rounded-full bg-foreground/20 mt-8 mx-auto" />
+
+
       </div>
     </div>
   );
