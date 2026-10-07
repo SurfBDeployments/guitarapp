@@ -30,7 +30,7 @@ interface City {
   name: string;
 }
 
-export function Signup({ onSignIn, onSignUp }: Props) {
+export function Signup({ onSignIn }: Props) {
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -43,7 +43,7 @@ export function Signup({ onSignIn, onSignUp }: Props) {
   const [currentCity, setCurrentCity] = useState<City | null>(null);
 
   return (
-    <div className="flex flex-col px-6" style={{ minHeight: "100%", paddingBottom: 40 }}>
+    <div className="flex flex-col px-6" style={{ minHeight: "800px", paddingBottom: 40, paddingTop: 20 }}>
       {/* Heading */}
       <div className="mb-6 text-center">
         <h1 className="font-bold text-foreground leading-tight" style={{ fontSize: 28, letterSpacing: "-0.02em" }}>
