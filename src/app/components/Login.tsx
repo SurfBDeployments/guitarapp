@@ -16,7 +16,7 @@ export function Login({ onSignIn, onSignUp, onForgot }: Props) {
 
       {/* Sign Up link top-right */}
       <div className="flex justify-end pt-2 pb-4">
-        <button onClick={onSignUp} className="text-sm text-muted-foreground underline text-foreground underline-offset-2" id="signup">
+        <button onClick={onSignUp} className="text-sm underline text-foreground underline-offset-2" id="signup">
           Sign Up
         </button>
       </div>
@@ -109,7 +109,7 @@ export function Login({ onSignIn, onSignUp, onForgot }: Props) {
         {/* Forgot password */}
         <button
           onClick={() => onForgot()}
-          className="text-sm text-muted-foreground underline text-foreground underline-offset-2 mt-4" id="priv"
+          className="text-sm underline text-foreground underline-offset-2 mt-4" id="priv"
         >
           Forgot password?
         </button>

@@ -21,25 +21,27 @@ export function ForgotPassword({ onSignIn, onSignUp, onBack, canGoBack }: Props)
   };
 
   return (
-    <div className="flex flex-col px-6" style={{ minHeight: "100%", paddingBottom: 100 }}>
+    <div className="flex flex-col w-full" style={{ minHeight: "100%", paddingBottom: 100 }}>
 
 
       {/* Heading */}
-      < div className="w-full justify-between items-center px-6 py-4 border-black/10 bg-white/40 backdrop-blur-sm shrink-0" >
-        {
-          canGoBack ? (
-            <button
-              onClick={handleBackClick}
-              className="items-center text-sm font-medium text-gray-800 hover:text-black transition-colors"
-            >
-              <ArrowLeft size={18} style={{ display: "inline" }} /> Back
-            </button>
-          ) : (
-            <div className="w-12" />
-          )
-        }
-
-
+      <header>
+        <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm shrink-0" >
+          {
+            canGoBack ? (
+              <button
+                onClick={handleBackClick}
+                className="items-center text-sm font-medium text-gray-800 hover:text-black transition-colors"
+              >
+                <ArrowLeft size={18} style={{ display: "inline" }} /> Back
+              </button>
+            ) : (
+              <div className="w-12" />
+            )
+          }
+        </div>
+      </header>
+      <main>
         <div className="mb-6 text-center">
           <span className="flex justify-center font-sans font-bold text-2xl text-foreground tracking-wide">
             JamMaster Tuning
@@ -84,8 +86,9 @@ export function ForgotPassword({ onSignIn, onSignUp, onBack, canGoBack }: Props)
 
         </div>
 
+      </main>
 
-      </div>
     </div>
+
   );
 }

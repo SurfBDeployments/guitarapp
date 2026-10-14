@@ -55,7 +55,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center gap-3 w-full min-h-[800px]">
+    <div className="flex flex-col items-center gap-3 w-full min-h-[800px]">
       <div
         className="relative bg-background overflow-auto flex flex-col w-full max-w-[800px] min-h-[800px]"
         //className="relative bg-background rounded-[44px] overflow-auto flex flex-col w-full max-w-[800px] min-h-[800px]"
@@ -107,30 +107,37 @@ export default function App() {
 
         {flow === "privacy" && (
           <AuthLayout>
-            <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
-              <button
-                onClick={handleBack}
-                className="text-sm font-medium text-gray-800 hover:text-black transition-colors justify-content"
-              >
-                <ArrowLeft size={18} style={{ display: "inline" }} /> Back
-
-              </button>
-              <div className="flex gap-4 items-center">
+            <header>
+              <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm">
                 <button
-                  onClick={() => navigateTo("login")}
-                  className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                  onClick={handleBack}
+                  className="text-sm font-medium text-gray-800 hover:text-black transition-colors justify-content"
                 >
-                  Log In
+                  <ArrowLeft size={18} style={{ display: "inline" }} /> Back
                 </button>
-                <button
-                  onClick={() => navigateTo("signup")}
-                  className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
-                >
-                  Sign Up
-                </button>
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={() => navigateTo("login")}
+                    className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                  >
+                    Log In
+                  </button>
+                  <button
+                    onClick={() => navigateTo("signup")}
+                    className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                  >
+                    Sign Up
+                  </button>
+                </div>
               </div>
-            </div>
-            <Privacy />
+            </header>
+            <Privacy
+              activeScreen={screen}
+              onSelectScreen={(nextScreen) => {
+                // Switch flow to "app" and set the target screen
+                navigateTo("app", nextScreen);
+              }}
+            />
           </AuthLayout>
         )}
 

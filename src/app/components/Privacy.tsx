@@ -1,16 +1,12 @@
-import React from "react";
-interface PrivacyProps {
-  onBack?: () => void;
-}
-const Privacy: React.FC = () => {
+import { BottomNav, Screen } from "./bottomnav";
+
+
+export function Privacy({ activeScreen, onSelectScreen }: { activeScreen: Screen; onSelectScreen: (id: Screen) => void }) {
 
   return (
     <>
-
       <div className="relative shadow-2xl flex flex-col w-full max-w-[800px] min-h-[640px]">
-
         <article className="p-6 md:p-10 overflow-y-auto space-y-6 text-gray-800">
-
           <div className="maincontent max-w-2xl mx-auto space-y-6">
             <h1 className="max-w-m text-4xl font-semibold">Privacy Statement</h1>
 
@@ -180,15 +176,15 @@ const Privacy: React.FC = () => {
               We may also share anonymous or de-identified information with other third parties in
               connection with the purposes outlined in this Privacy Statement.
             </p>
-
           </div>
-
         </article>
 
+        <nav>
+          <BottomNav onSelect={onSelectScreen} />
+        </nav>
       </div>
-
-
     </>
   );
 }
+
 export default Privacy;

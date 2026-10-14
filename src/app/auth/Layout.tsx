@@ -8,7 +8,10 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 
 
       {/* Screen Content (Landing / Login / Signup) */}
-      <div className="flex-1 overflow-y-auto">{children}</div>
+      <main>
+        <div className="flex-1 overflow-y-auto">{children}</div>
+      </main>
     </div>
+
   );
 }

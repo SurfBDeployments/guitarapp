@@ -1,11 +1,9 @@
 import React, { useState } from "react";
+import { BottomNav } from "./bottomnav";
 
 import {
-    Guitar,
+
     Menu,
-    Music4,
-    SlidersHorizontal,
-    LucideIcon,
     Share2,
     HelpCircle,
     Lock,
@@ -22,12 +20,7 @@ import Guitars from "../../imports/10guitarpdpherocropbw.png";
 
 export type Screen = "instrument" | "tune" | "music" | "tools";
 
-const NAV: { id: Screen; label: string; icon: LucideIcon }[] = [
-    { id: "instrument", label: "Instrument", icon: Guitar },
-    { id: "tune", label: "Tune", icon: Radio },
-    { id: "music", label: "Music", icon: Music4 },
-    { id: "tools", label: "Tools", icon: SlidersHorizontal },
-];
+
 
 interface ProfileOverlayProps {
     onClose: () => void;
@@ -73,7 +66,9 @@ function ProfileOverlay({ onClose, onSignOut, onPrivacy, onTunerSettings }: Prof
                     <p className="text-sm font-bold text-foreground mb-3">My Profile</p>
                     <p className="text-sm font-medium text-foreground">Brian M</p>
                     <p className="text-sm text-foreground mt-0.5 underline cursor-pointer">
-                        jamMaster@gmail.com
+                        <a href="mailto:jamMaster@gmail.com" >
+                            jamMaster@gmail.com
+                        </a>
                     </p>
                     <button
                         className="mt-3 text-sm font-medium text-[#c0392b]"
@@ -163,46 +158,6 @@ function ProfileOverlay({ onClose, onSignOut, onPrivacy, onTunerSettings }: Prof
     );
 }
 
-function BottomNav({
-    activeScreen,
-    onSelect,
-}: {
-    activeScreen: Screen;
-    onSelect: (id: Screen) => void;
-}) {
-    return (
-        <div
-            className="border-t border-border flex items-stretch shrink-0"
-            style={{ height: 75, background: "#ffffff", padding: "10px" }}
-        >
-            {NAV.map((n) => {
-                const Icon = n.icon;
-                const active = activeScreen === n.id;
-                return (
-                    <button
-                        key={n.id}
-                        onClick={() => onSelect(n.id)}
-                        className={`relative flex-1 flex flex-col items-center justify-center gap-1 ${active
-                            ? "text-accent-foreground"
-                            : "accent-foreground hover:bg-muted/50"
-                            }`}
-                    >
-                        <Icon size={18} />
-                        <span
-                            className={`text-sm font-sans ${active ? "font-semibold" : "font-normal"
-                                }`}
-                        >
-                            {n.label}
-                        </span>
-                        {active && (
-                            <div className="absolute bottom-1 w-4 h-0.5 rounded-full accent-foreground" />
-                        )}
-                    </button>
-                );
-            })}
-        </div>
-    );
-}
 
 interface AppLayoutProps {
     children: React.ReactNode;
@@ -227,7 +182,7 @@ export function AppLayout({
     canGoBack = true,
 }: AppLayoutProps) {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [tunerOpenSettings, setTunerOpenSettings] = useState(false);
+
 
     const handleBackClick = () => {
         if (onBack) {
@@ -242,59 +197,68 @@ export function AppLayout({
             minHeight: "800px"
         }} >
             {/* Drawer Overlay */}
-            {menuOpen && (
-                <ProfileOverlay
-                    onClose={() => setMenuOpen(false)}
-                    onSignOut={() => {
-                        setMenuOpen(false);
-                        onSignOut();
-                    }}
-                    onPrivacy={() => {
-                        setMenuOpen(false);
-                        onPrivacy();
-                    }}
-                    onTunerSettings={() => {
-                        setMenuOpen(false);
-                        onTunerSettings();
-                    }}
-                />
-            )}
+            <section>
+                {menuOpen && (
+                    <ProfileOverlay
+                        onClose={() => setMenuOpen(false)}
+                        onSignOut={() => {
+                            setMenuOpen(false);
+                            onSignOut();
+                        }}
+                        onPrivacy={() => {
+                            setMenuOpen(false);
+                            onPrivacy();
+                        }}
+                        onTunerSettings={() => {
+                            setMenuOpen(false);
+                            onTunerSettings();
+                        }}
 
+                    />
+
+                )}
+            </section>
 
             {/* Top Header Row with Back, Title, and Hamburger */}
-            <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm shrink-0">
-                {canGoBack ? (
-                    <button
-                        onClick={handleBackClick}
-                        className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
-                    >
-                        <ArrowLeft size={18} style={{ display: "inline" }} /> Back
-                    </button>
-                ) : (
-                    <div className="w-12" />
-                )}
+            <header>
+                <div className="w-full flex justify-between items-center px-6 py-4 border-b border-black/10 bg-white/40 backdrop-blur-sm shrink-0">
+                    {canGoBack ? (
+                        <button
+                            onClick={handleBackClick}
+                            className="text-sm font-medium text-gray-800 hover:text-black transition-colors"
+                        >
+                            <ArrowLeft size={18} style={{ display: "inline" }} /> Back
+                        </button>
+                    ) : (
+                        <div className="w-12" />
+                    )}
 
-                <span className="font-sans font-bold text-2xl text-foreground tracking-wide">
-                    JamMaster Tuning
-                </span>
+                    <span className="font-sans font-bold text-2xl text-foreground tracking-wide">
+                        JamMaster Tuning
+                    </span>
 
-                <div className="flex items-center justify-between">
-                    <button
-                        type="button"
-                        onClick={() => setMenuOpen(true)}
-                        aria-label="Open menu"
-                        className="w-7 h-7 rounded border border-border flex items-center justify-center"
-                    >
-                        <Menu size={16} className="text-foreground" />
-                    </button>
+                    <div className="flex items-center justify-between">
+                        <button
+                            type="button"
+                            onClick={() => setMenuOpen(true)}
+                            aria-label="Open menu"
+                            className="w-7 h-7 rounded border border-border flex items-center justify-center"
+                        >
+                            <Menu size={16} className="text-foreground" />
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </header>
 
             {/* Active Screen View */}
-            <div className="flex-1 overflow-y-auto">{children}</div>
+            <main>
+                <div className="flex-1 overflow-y-auto">{children}</div>
+            </main>
 
             {/* Bottom Nav Bar */}
-            <BottomNav activeScreen={activeScreen} onSelect={onSelectScreen} />
+            <nav>
+                <BottomNav activeScreen={activeScreen} onSelect={onSelectScreen} />
+            </nav>
         </div>
     );
 }
