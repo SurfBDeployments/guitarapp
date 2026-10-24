@@ -37,7 +37,7 @@ export function Landing({ onGetStarted, onLogin, onPrivacy }: Props) {
         </div>
 
         {/* Buttons */}
-        <div className="w-full flex flex-col gap-3 mt-6" style={{ maxWidth: "325px", margin: "20 auto", width: "100%" }}>
+        <div className="w-full flex flex-col gap-3 mt-6 justify-center" style={{ maxWidth: "325px", margin: "20 auto", width: "100%" }}>
           <button
             onClick={onGetStarted}
             className="w-full py-3.5 rounded-xl shadow-md bg-muted text-foreground font-medium text-sm border border-border" id="getstarted"
@@ -50,16 +50,17 @@ export function Landing({ onGetStarted, onLogin, onPrivacy }: Props) {
           >
             Log in
           </button>
+          {/* Privacy */}
+
+          <button
+            className="text-sm underline text-foreground underline-offset-2 mt-4 justify-center" id="priv"
+            onClick={() => onPrivacy()}
+          >
+            Privacy Policy
+          </button>
         </div>
 
-        {/* Privacy */}
 
-        <button
-          className="text-sm underline text-foreground underline-offset-2 mt-4" id="priv"
-          onClick={() => onPrivacy()}
-        >
-          Privacy Policy
-        </button>
       </main>
     </div>
   );
