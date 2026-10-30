@@ -18,7 +18,7 @@ export function Landing({ onGetStarted, onLogin, onPrivacy }: Props) {
           <h1 className="font-bold text-foreground leading-tight" style={{ fontSize: 28, letterSpacing: "-0.02em" }}>
             JamMaster Tuning
           </h1>
-          <p className="text-foreground mt-1 font-semibold" style={{ fontSize: 16 }}>
+          <p className="text-foreground mt-1 font-semibold" style={{ fontSize: 18 }}>
             Get Tuned, Jam Hard!
           </p>
         </div>

@@ -22,11 +22,11 @@ export function Login({ onSignIn, onSignUp, onForgot }: Props) {
       </div>
 
       {/* Heading */}
-      <div className="mb-6 text-center">
+      <div className="text-center mt-8 mb-6">
         <h1 className="font-bold text-foreground leading-tight" style={{ fontSize: 28, letterSpacing: "-0.02em" }}>
           Welcome Back to < br />{"\n"}JamMaster Tuning
         </h1>
-        <p className="text-sm font-semibold text-foreground mt-3" style={{ fontSize: "16px" }}>
+        <p className="text-sm font-semibold text-foreground mt-3" style={{ fontSize: "18px" }}>
           Getting you ready to Jam!
         </p>
         <p className="text-sm text-foreground mt-1.5">

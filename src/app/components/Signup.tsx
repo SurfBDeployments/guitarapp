@@ -46,13 +46,14 @@ export function Signup({ onSignIn }: Props) {
     <div className="flex flex-col px-6" style={{ minHeight: "800px", paddingBottom: 40, paddingTop: 20 }}>
       {/* Heading */}
       <header>
-        <div className="mb-6 text-center">
+        <div className="text-center mt-8 mb-6">
+          <p className="text-sm font-semibold text-foreground mt-1" style={{ fontSize: "18px" }}>
+            JamMaster Tuning
+          </p>
           <h1 className="font-bold text-foreground leading-tight" style={{ fontSize: 28, letterSpacing: "-0.02em" }}>
             Let's Get Started
           </h1>
-          <p className="text-sm font-semibold text-foreground mt-3" style={{ fontSize: "16px" }}>
-            JamMaster Tuning
-          </p>
+
         </div>
       </header>
       {/* Form card */}
